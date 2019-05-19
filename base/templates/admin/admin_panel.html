@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin_panel.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="panel-block">
+        <div class="panel-block-header">
+            <a href="/products_panel/1" class="panel-block-header-link">Товары</a>
+        </div>
+        <div class="panel-block-content">
+            <div class="panel-block-content-field">Всего товаров в базе: {{ number_of_products }}</div>
+        </div>
+    </div>
+    <div class="panel-block">
+        <div class="panel-block-header">
+            <a href="/orders_panel" class="panel-block-header-link">Заказы</a>
+        </div>
+        <div class="panel-block-content">
+            <div class="panel-block-content-field">Всего заказов: {{ orders.total }}</div>
+            <div class="panel-block-content-field">Выполнено заказов: {{ orders.done }}</div>
+            <div class="panel-block-content-field">Принято заказов: {{ orders.accept }} </div>
+            <div class="panel-block-content-field">Новых заказов: {{ orders.new }} </div>
+        </div>
+    </div>
+    <div class="panel-block">
+        <div class="panel-block-header">
+            <a href="/comments_panel" class="panel-block-header-link">Комментарии</a>
+        </div>
+        <div class="panel-block-content">
+           <div class="panel-block-content-field">Всего комментариев: {{ comments.total }}</div>
+           <div class="panel-block-content-field">Комментариев сегодня: {{ comments.today }}</div>
+        </div>
+    </div>
+    <div class="panel-block">
+        <div class="panel-block-header">
+            <a href="/admins_panel" class="panel-block-header-link">Администраторы</a>
+        </div>
+        <div class="panel-block-content">
+            <div class="panel-block-content-field">Всего администраторов: {{ admins.count }}</div>
+            <div class="admins-block">
+                <table class="admins-table">
+                    <tr class="admins-table-header">
+                        <td>Логин</td>
+                        <td>Имя</td>
+                        <td>Фамилия</td>
+                        <td>Email</td>
+                        <td>Последний вход</td>
+                        <td>Права</td>
+                    </tr>
+                    {% for admin in admins.profiles %}
+                        <tr>
+                            <td class="login-column">
+                                <a href="/profile/{{ admin.id }}">{{ admin.username }}</a>
+                            </td>
+                            <td>{{ admin.first_name }}</td>
+                            <td>{{ admin.last_name }}</td>
+                            <td>{{ admin.email }}</td>
+                            <td>{{ admin.last_login|date:"d.m.Y H:i" }}</td>
+                            <td>Права</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

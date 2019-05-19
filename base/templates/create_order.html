@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/create_order.css' %}">
+{% endblock %}
+
+
+{% block extended_js %}
+    {% load static %}
+    <script src="{% static 'js/create_order.js'%}"></script>
+{% endblock %}
+
+
+{% block content %}
+    <center>
+        <span class="order-header">Заказ № {{ order_number }}</div>
+    </center>
+
+    <a href="/product/{{ product.id }}" target="_blank">
+        <div class="product-info-block">
+            <img src="" class="product-img">
+            <div class="product-info">
+                <div class="product-info-header">
+                    {{ product.name }}
+                </div>
+                <div>
+                    {{ product.describe }}
+                </div>
+            </div>
+            <div class="product-price-block">
+                <div class="product-price-header">
+                    Цена
+                </div>
+                <center>
+                    <div id="price">{{ product.price }} руб.</div>
+                </center>
+            </div>
+        </div>
+    </a>
+
+    <div class="order-parameters-block">
+        <form method="post" id="parameters">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="counter" class="form-label">Количество:</label>
+                <input type="number" id="counter" class="form-item" min="1" onchange="get_sum();" value="1" name="count">
+            </div>
+            <div class="form-field">
+                <label for="size" class="form-label">Размер запястья:</label>
+                <a href="/manual/" class="help-btn">
+                    <div class="help-msg">Нажмите на эту кнопку, чтобы узнать как правильно замерить запястье</div>
+                </a>
+                <input type="number" id="size" class="form-item" min="1" name="size">
+            </div>
+            <div class="form-field">
+                <label for="phone_number" class="form-label">Телефон:</label>
+                <div class="help-btn">
+                    <div class="help-msg">Номер для обратной связи</div>
+                </div>
+                <input type="text" id="phone_number" class="form-item" maxlength="12" value="{{ user_info.phone_number }}" name="phone_number">
+            </div>
+        </form>
+    </div>
+
+    <div class="submit-block">
+        <div class="submit-text" id="result_price">
+            Итого:  {{ product.price }} рублей
+        </div>
+        <div class="submit-btn" onclick="parameters.submit();">Подтвердить</div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+.main-header {
+    margin: 50px;
+    margin-bottom: 30px;
+    font-family: 'Times New Roman';
+    font-size: 18pt;
+    font-style: normal;
+    font-weight: bold;
+    color: black;
+}
+
+.profile-ref {
+    color: blue;
+}
+
+.orders-table {
+    border: 5px solid gray;
+    margin: 0 100 0 100px;
+    border-radius: 10px;
+    width: 1200px;
+    font-size: 14pt;
+    font-family: 'Arial';
+    border-collapse: separate;
+}
+
+td {
+    font-size: 10pt;
+    margin: 0px;
+    border-right: 0px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    text-align: center;
+    font-style: italic;
+    padding: 5px;
+}
+
+.table-header>td {
+    font-size: 12pt;
+    border-top: 0px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+#time-column {
+  width: 120px;
+}
+
+#count-column {
+    width: 100px;
+}
+
+#size-column {
+    width: 90px;
+}
+
+#price-column {
+    width: 120px;
+}
+
+#status-column {
+    width: 80px;
+}
+
+
+.name-column>a {
+    text-align: left;
+    width: 450px;
+    color: blue;
+    float: left;
+}
+
+
+.status-icon {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+.status-block {
+    margin: 0 0 30 100px;
+}
+
+.status-describe {
+    margin: 10px;
+}
+
+
+

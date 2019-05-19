@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin/create_product.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block extended_js %}
+    {% load static %}
+    <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="product-block">
+        <form method="post" class="forms" id="ProductForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="ProductName" class="form-label">Название товара:</label>
+                <input type="text" id="ProductName" class="form-item" name="name">
+            </div>
+            <div class="form-field">
+                <label for="ProductPrice" class="form-label">Цена:</label>
+                <input type="number" class="form-item" id="ProductPrice" name="price">
+            </div>
+            <div class="form-field">
+                <label for="ProductType" class="form-label">Тип:</label>
+                <input type="text" name="type" class="form-item" id="ProductType" placeholder="Введите тип, например: Браслет кольцо">
+            </div>
+            <div class="form-field">
+                <label for="ProductColor" class="form-label">Цвет:</label>
+                <input type="text" name="color" class="form-item" id="ProductColor" placeholder="Введите цвет, например: красный">
+            </div>
+            <div class="form-field">
+                <label for="ProductStone" class="form-label">Камень:</label>
+                <input type="text" name="stone" class="form-item" id="ProductStone" placeholder="Введите название камня, например: гранат">
+            </div>
+            <div class="form-field">
+                <label for="ProductMG" class="form-label">Магические свойства:</label>
+                <input type="text" name="MG" class="form-item" id="ProductMG" placeholder="Введите магические свойства, например: удача">
+            </div>
+            <div class="form-field">
+                <label for="ProductMD" class="form-label">Целебные свойства:</label>
+                <input type="text" name="MD" class="form-item" id="ProductMD" placeholder="Введите целебные свойства, например: голова">
+            </div>
+            <div class="form-field">
+                <label for="ProductShortDescription" class="form-label">Краткое описание товара (для каталога):</label>
+                <textarea class="textarea-base" name="short_description" id="ProductShortDescription" form="ProductForm" maxlength="255"></textarea>
+            </div>
+            <div id="ProductDescriptionBlock">
+                <label for="ProductDescription" class="form-label">Описание:</label>
+                <textarea class="textarea-base" name="description" id="ProductDescription" form="ProductForm" maxlength="5000"></textarea>
+            </div>
+            <div id="UploadPhotosBlock">
+                <label for="UploadPhotos" class="form-label">Фотографии: </label>
+                <input type="file" name="photos" id="UploadPhotos"  multiple="multiple" style="margin-left: 20px">
+            </div>
+        </form>
+        <center>
+            <button id="SubmitButton" type="submit" form="ProductForm">Создать</button>
+        </center>
+    </div>
+{% endblock %}

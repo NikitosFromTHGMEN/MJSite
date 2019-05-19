@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comments.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block extended_js %}
+    {% load static %}
+    <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+    <script src="{% static 'js/settings.js'%}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="photos-block">
+        <img src="{{ user_info.photo }}" class="photo-profile-view" alt="">
+
+        <form class="forms form-personal-block" method="post" enctype="multipart/form-data" action="/settings/">
+            {% csrf_token %}
+            <div class="form-field">
+                <label class="form-label" for="change_firstname">Имя:</label>
+                <input class="form-item" type="text" id="change_firstname" value="{{ user_info.user.first_name }}" name="first_name">
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="change_secondname">Фамилия:</label>
+                <input class="form-item" type="text" id="change_secondname" value="{{ user_info.user.last_name }}" name="last_name">
+            </div>
+            <div class="form-field">
+                <label for="change_phone">Телефон:</label>
+                <input class="form-item" type="text" id="change_phone" value="{{ user_info.phone_number }}" name="phone">
+            </div>
+            <div class="form-field">
+                <label for="change_email">Email:</label>
+                <input class="form-item" type="text" id="change_email" value="{{ user_info.user.email }}" name="email">
+            </div>
+            <div class="form-field">
+                <label for="change_dateofbirth">Дата рождения:</label>
+                <input class="form-item" type="date" id="change_dateofbirth" name="date_of_birth">
+            </div>
+            <div class="form-field">
+                <label for="change_dateofbirth">Старый пароль:</label>
+                <input class="form-item" type="password" id="old_password" name="old_passwd">
+            </div>
+            <div class="form-field">
+                <label for="change_dateofbirth">Новый пароль:</label>
+                <input class="form-item" type="password" id="new_password" name="new_passwd">
+            </div>
+
+            <center>
+                <button type="submit" class="save-info-btn">Сохранить</button>
+            </center>
+        </form>
+
+        <form class="upload-photo-form" method="post" enctype="multipart/form-data" action="/upload/">
+            {% csrf_token %}
+            <input type="file" name="document" id="file" class="input-file">
+            <label for="file" class="btn btn-tertiary js-labelFile">
+                <center>
+                    <span class="js-fileName">Загрузить фото</span>
+                    <i class="icon fa fa-check"></i>
+                </center>
+            </label>
+        </form>
+    </div>
+    <center>
+        {% for error in errors %}
+        <div class="error-msg">
+            {{ error }}
+        </div>
+        {% endfor %}
+    </center>
+
+{% endblock %}
+
+
+
+

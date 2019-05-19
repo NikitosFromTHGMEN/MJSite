@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static%}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <center>
+        <font size="36pt">Авторизация</font>
+
+        <form class="form" method="post" action="/login/">
+            {% csrf_token %}
+            <div class="form-field">
+                <label>Логин: </label>
+                <input type="text" class="form-item" name="username">
+            </div>
+            <div class="form-field">
+                <label>Пароль: </label>
+                <input type="password" class="form-item" name="password">
+            </div>
+            <input type="hidden" value="{{ next }}" name="next">
+            <button type="submit" class="login-btn">Войти</button>
+        </form>
+
+        <p class="sign-up-redir"><span class="snup-redir">У Вас ещё нет аккаунта?</span>
+            <a class="sign-up-button" href="/sign_up/">Зарегистрироваться</a>
+        </p>
+    </center>
+{% endblock %}

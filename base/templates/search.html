@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock %}
+
+{% block extended_js %}
+    {% load static %}
+    <script src="{% static 'js/search.js'%}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="search-block">
+        <input id="NameType" type="text" class="search-name-field" placeholder="Введите название" value="{{ default_q }}">
+        <div class="search-price-block">
+            <div class="search-price-header">Цена</div>
+            <label for="PriceFrom">От:</label>
+            <input id="PriceFrom" type="number" class="search-price-field" min_val="0" value="{{ default_price_from }}"> руб.
+            <br>
+            <label for="PriceFrom">До:</label>
+            <input id="PriceTo" type="number" class="search-price-field" min_val="0" value="{{ default_price_to }}"> руб.
+        </div>
+
+        <div class="search-attributes-block">
+            <select id="SimpleType" value="Браслет" selected>
+                <option>
+                    Не выбрано
+                </option>
+                {% for tag in search_tags %}
+                    {% if tag.type == "simple" %}
+                        <option value="{{ tag.tag_name }}">
+                            {{ tag.tag_name }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select id="ColorsType">
+                <option>
+                    Не выбрано
+                </option>
+                {% for tag in search_tags %}
+                    {% if tag.type == "color" %}
+                        <option value="{{ tag.tag_name }}">
+                            {{ tag.tag_name }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select id="StoneType">
+                <option>
+                    Не выбрано
+                </option>
+                {% for tag in search_tags %}
+                    {% if tag.type == "stone" %}
+                        <option value="{{ tag.tag_name }}">
+                            {{ tag.tag_name }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select id="MagCharType">
+                <option>
+                    Не выбрано
+                </option>
+                {% for tag in search_tags %}
+                    {% if tag.type == "mgchar" %}
+                        <option value="{{ tag.tag_name }}">
+                            {{ tag.tag_name }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select id="MedCharType">
+                <option>
+                    Не выбрано
+                </option>
+                {% for tag in search_tags %}
+                    {% if tag.type == "mdchar" %}
+                        <option value="{{ tag.tag_name }}">
+                            {{ tag.tag_name }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <a id="SearchButton" href="/search/"><button class="search-confirm-button" onclick="get_search_ref();">Поиск</button></a>
+    </div>
+    <div class="content-block">
+        {% for product in products %}
+            <a href="/product/{{ product.id }}" class="content-item">
+                <div class="content-item-fill">
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

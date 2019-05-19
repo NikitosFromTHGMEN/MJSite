@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content-block">
+        <div>
+            <div class="content-item">
+                <div class="content-item-fill">
+                    Браслет из натуральных камней пиропа и коралла.
+                    Немного о свойствах камней:
+                    * коралл наполняет энергией, даёт устойчивость, стабильность, заземляет.
+                    * пироп - камень наполняющий жизнелюбием и обаянием, творческой энергией и яркими эмоциями.
+                </div>
+            </div>
+            <a class="content-item" href="/product/1">
+                <div class="content-item-fill">
+                    Браслет из натуральных камней пиропа и коралла.
+                    Немного о свойствах камней:
+                    * коралл наполняет энергией, даёт устойчивость, стабильность, заземляет.
+                    * пироп - камень наполняющий жизнелюбием и обаянием, творческой энергией и яркими эмоциями.
+                </div>
+            </a>
+            <div class="content-item">
+                <div class="content-item-fill">
+                    Браслет из натуральных камней пиропа и коралла.
+                    Немного о свойствах камней:
+                    * коралл наполняет энергией, даёт устойчивость, стабильность, заземляет.
+                    * пироп - камень наполняющий жизнелюбием и обаянием, творческой энергией и яркими эмоциями.
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="content-item"></div>
+            <div class="content-item"></div>
+            <div class="content-item"></div>
+        </div>
+    </div>
+
+{% endblock %}
+

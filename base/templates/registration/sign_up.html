@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static%}
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+{% endblock %}
+
+{% block content %}
+    <center>
+        <font size="36pt">Регистрация</font>
+
+        <form method="post" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+
+            <div class="form-field">
+                <div class="form-label">
+                    {{ form.login.label }}
+                </div>
+                {{ form.login }}
+            </div>
+
+            <div class="form-field">
+                <div class="form-label">
+                    {{ form.fname.label }}
+                </div>
+                {{ form.fname }}
+            </div>
+
+            <div class="form-field">
+                <div class="form-label">
+                    {{ form.lname.label }}
+                </div>
+                {{ form.lname }}
+            </div>
+
+            <div class="form-field">
+                <div class="form-label">
+                    {{ form.email.label }}
+                </div>
+                {{ form.email }}
+            </div>
+
+            <div class="form-field">
+                <div class="form-label">
+                    {{ form.date_of_birth.label }}
+                </div>
+                {{ form.date_of_birth}}
+            </div>
+
+            <div class="form-field">
+                <div class="form-label">
+                    {{ form.password.label }}
+                </div>
+                {{ form.password }}
+            </div>
+
+            <div class="form-field">
+                <div class="form-label">
+                    {{ form.password_conf.label }}
+                </div>
+                {{ form.password_conf }}
+            </div>
+
+            <center>
+                <button type="submit" class="confirm-btn">Зарегистрироваться</button>
+            </center>
+        </form>
+
+        {% for error in errors%}
+            <div class="error-msg">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </center>
+{% endblock%}

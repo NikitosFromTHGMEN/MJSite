@@ -1,0 +1,91 @@
+.search-block {
+    height: 350px;
+    border-bottom: 1px solid gray;
+}
+
+.search-name-field {
+    position: relative;
+    left: 260px;
+    width: 800px;
+    height: 40px;
+    align: center;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    font-size: 14pt;
+    transition: 1s;
+}
+
+.search-attributes-block {
+    width: 600px;
+    height: 120px;
+    position: relative;
+    left: 540px;
+    top: -170px;
+}
+
+.search-price-block {
+    position: relative;
+    left: 260px;
+    width: 200px;
+    height: 130px;
+    border: 2px solid gray;
+    padding: 15px;
+    font-size: 13pt;
+    font-family: 'Arial';
+    border-radius: 10px;
+}
+
+.search-price-header {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.search-price-field {
+    padding-left: 5px;
+    width: 80px;
+    height: 30px;
+    transition: 1s;
+    border: 1px solid gray;
+    margin: 15 0 0 5px;
+    border-radius: 5px;
+}
+
+.search-price-field:focus {
+    border: 1px solid aquamarine;
+    transition: 0.2s;
+}
+
+select {
+    width: 120px;
+    height: 30px;
+    background-color: white;
+    color: black;
+    font-size: 12pt;
+    margin: 15px;
+    margin-right: 50px;
+    transition: 1s;
+}
+
+select:focus {
+    border-color: aquamarine;
+    transition: 0.2s;
+}
+
+.search-name-field:focus {
+    border-color: aquamarine;
+    transition: 0.2s;
+}
+
+.search-confirm-button {
+    position: relative;
+    top: -60px;
+    left: 650px;
+    width: 100px;
+    height: 30px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: white;
+}
+

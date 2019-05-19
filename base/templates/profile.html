@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comments.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="account">
+        <div class="account-info">
+            <img src="{{ user_photo }}" class="account-img" alt="">
+            <div class="account-name">{{ user.first_name }} {{ user.last_name }}</div>
+            <div class="account-second-info">
+                Дата рождения: {{ date_of_birth }}<br><br>
+                Дата регистрации: {{ reg_date }}
+            </div>
+        </div>
+        <div class="user-purcashes">
+            <center><b>Последние заказы пользователя</b></center>
+            <div class="purcashes-items">
+                {% for order_list in last_orders %}
+                    <div>
+                        {% for order in order_list %}
+                            <a href="/product/{{ order.product.id }}">
+                                <img src="{{ order.product.photo }}" class="product-item">
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            <center>
+                <a href="/orders_list/{{ user.id }}">
+                    <button class="all-orders-btn">Все заказы</button>
+                </a>
+            </center>
+        </div>
+    </div>
+    <div class="user-comments">
+        <div class="comments-header">
+            <b>Комментарии, оставленные пользователем</b>
+        </div>
+        {% for comment in comments %}
+            <div class="comment">
+                <a href="/product/{{ comment.product.id }}">
+                    <div class="comment-author-block">
+                        <img src="{{ comment.product.photo }}" class="comment-author-photo">
+                    </div>
+                </a>
+                <div class="comment-content">
+                    {{ comment.text }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

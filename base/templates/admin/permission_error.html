@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheets" href="{% static 'css/admin/permission_error.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <center>
+        <p>Ошибка доступа</p>
+        {% load static %}
+        <img src="{% static 'images/YSNP.gif' %}">
+    </center>
+{% endblock %}
+
+

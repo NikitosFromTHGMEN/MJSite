@@ -1,0 +1,62 @@
+.user-comments {
+    width: 1250px;
+    margin-left: 60px;
+    margin-top: 70px;
+    display: inline-block;
+    font-family: 'Times New Roman';
+    font-size: 16pt;
+}
+
+.comments-header {
+    margin-bottom: 40px;
+}
+
+.comment {
+    height: 200px;
+    background-color: white;
+    margin: 20px;
+    border-radius: 0px;
+    border: 3px solid gray;
+    padding: 15px;
+}
+
+.comment-author-block {
+    width: 150px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.comment-author-photo {
+    width: 100px;
+    height: 135px;
+    margin: 0 25 0 25px;
+    border: 2px solid aquamarine;
+    background-image: url('https://pp.userapi.com/c850024/v850024306/d76b0/ATuWqjgLirs.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
+
+.comment-author-info {
+    text-align: center;
+    font-size: 14pt;
+    margin-top: 15px;
+    font-size: 12pt;
+    font-style: italic;
+    color: black;
+}
+
+.comment-content {
+    display: inline-block;
+    vertical-align: top;
+    background-color: white;
+    width: 980px;
+    height: 180px;
+    margin: 15 0 0 20px;
+    font-size: 14pt;
+    font-style: italic;
+}

@@ -1,0 +1,68 @@
+.panel-block {
+    margin: 50px;
+}
+
+.panel-block-header {
+    background-color: black;
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+}
+
+.panel-block-header-link {
+    color: white;
+    transition: 0.3s;
+}
+
+.panel-block-header-link:hover {
+    font-size: 14pt;
+    transition: 0.4s;
+}
+
+
+.panel-block-content {
+    border: 2px solid gray;
+    padding: 20px;
+    font-family: 'Arial';
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.panel-block-content-field {
+    margin-bottom: 10px;
+}
+
+.admins-block {
+    margin-top: 15px;
+}
+
+.admins-table {
+    border: 2px solid gray;
+    width: 1200px;
+    font-size: 14pt;
+    font-family: 'Arial';
+    border-collapse: separate;
+}
+
+td {
+    font-size: 10pt;
+    margin: 0px;
+    border-right: 0px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    text-align: center;
+    font-style: italic;
+    padding: 5px;
+}
+
+.admins-table-header>td {
+    font-size: 12pt;
+    border-top: 0px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.login-column>a {
+    color: blue;
+}
+
+

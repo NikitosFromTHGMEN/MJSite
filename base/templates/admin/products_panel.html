@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin/products_panel.css' %}">
+{% endblock %}
+
+
+{% block extended_js %}
+    {% load static %}
+    <script src="{% static 'js/products_panel.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+    {% load static %}
+    <div class="actions-panel">
+        <a href="/create_product"><img src="{% static '/images/add_btn.png' %}" class="product-add-button"></a>
+    </div>
+
+    {% for item in products %}
+        <div class="product-block">
+            <img src="{{ item.product.photo }}" class="product-photo">
+            <div class="product-name-block">
+                <div class="product-field-header">Название</div>
+                {{ item.product.name }}
+            </div>
+            <div class="product-sold-block">
+                <div class="product-field-header">Заказано</div>
+                {{ item.sold }}
+            </div>
+            <div class="product-actions-block">
+                {% if item.product.is_distributing %}
+                    <a href="/products_panel/{{ pages.current }}?distribute=0,{{ item.product.id }}"><img src="{% static 'images/distribute-denied.jpg'%}" class="product-distribute-button"></a>
+                {% else %}
+                    <a href="/products_panel/{{ pages.current }}?distribute=1,{{ item.product.id }}"><img src="{% static 'images/distribute_allow.png'%}" class="product-distribute-button"></a>
+                {% endif %}
+                <a href="/edit_product/{{ item.product.id }}"><img src="{% static 'images/edit.png'%}" class="product-edit-button"></a>
+                <a href="/products_panel/{{ pages.current }}?delete={{ item.product.id }}"><img src="{% static 'images/abort-icon.png'%}" class="product-delete-button"></a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="change-page-block">
+        <center>
+            {% if pages.current > 1 %}
+                <img src="{% static 'images/arrow_icon.png' %}" class="change-page-prev" onclick="go_to_prev_page();">
+            {% endif %}
+            {% if pages.current > 1 or pages.current < pages.max %}
+                <input type="number" min="1" max="{{ pages.max }}" class="page-changer" value="{{ pages.current }}" id="PageChanger" onchange="go_to_enter_page();">
+            {% endif %}
+            {% if pages.current < pages.max %}
+                <img src="{% static 'images/arrow_icon.png' %}" class="change-page-next"  onclick="go_to_next_page();">
+            {% endif %}
+        </center>
+    </div>
+{% endblock %}
+
+

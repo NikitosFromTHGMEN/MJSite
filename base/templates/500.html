@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <center>
+        Упс...<br>
+        #500 Ошибка сервера
+        {% load static %}
+        <img src="{% static '/images/server_down.gif'%}">
+    </center>
+{% endblock %}

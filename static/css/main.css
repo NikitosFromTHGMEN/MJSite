@@ -1,0 +1,129 @@
+body {
+    margin: 0px;
+}
+
+.head {
+    background-color: #242424;
+    height: 50px;
+}
+.head-text {
+    position: absolute;
+    font-family: 'Cormorant Infant';
+    color: white;
+    left: 15px;
+    top: 10px;
+    font-style: italic;
+    font-size: 24px;
+}
+
+.head-image {
+height: 350px;
+background-image: url("https://avatars.mds.yandex.net/get-zen_doc/40456/pub_5b40ce8f8bcd5700a977161d_5b40cec98a640900a9287b07/scale_600");
+background-size: cover;
+background-position: 0 -250px;
+}
+
+.header-text {
+    position: relative;
+    font-size: 36pt;
+    color: white;
+    filter: none;
+    left: 30px;
+    top: 50px;
+}
+
+
+main {
+    margin-top: 80px;
+}
+
+.menu {
+    margin-left: 30px;
+}
+
+.menu-buttons {
+    display: inline-block;
+    margin: 15px;
+    color: white;
+}
+
+.menu-buttons:hover {
+    color: aquamarine;
+    }
+
+a {
+    text-decoration: none;
+}
+
+
+footer {
+    margin-top: 80px;
+    height: 50px;
+    width: 100%;
+    background-color: #242424;
+}
+
+.footer-text {
+    position: relative;
+    color: white;
+    text-align: center;
+    top: 20px;
+    right: 20px;
+    font-size: 14px;
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 15%;
+    background-color: gray;
+    background-size: cover;
+    background-image: url('/media/default.png');
+    right: 100px;
+    top: 10px;
+    position: absolute;
+}
+.profile {
+    position: absolute;
+    right: 50px;
+}
+
+.profile-items {
+    display: inline-block;
+    position: relative;
+    top: 0px;
+    color: white;
+  }
+
+.error-msg {
+    color: red;
+}
+
+
+.settings-button {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    right: 150px;
+    transition: 0.5s;
+}
+
+.control-panel-button {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    right: 185px;
+    transition: 0.5s;
+}
+
+.settings-button:hover, .control-panel-button:hover {
+    transition: 0.25s;
+    transform: scale(1.2);
+}
+
+
+

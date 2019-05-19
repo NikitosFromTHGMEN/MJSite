@@ -1,0 +1,25 @@
+<div class="head">
+    <a class="head-text" href="/">Магия камня</a>
+</div>
+<div class="head-image"></div>
+<div class="head">
+    <div class="menu">
+        <a class="menu-buttons" href="/catalog">Каталог</a>
+        <a class="menu-buttons" href="/search">Поиск</a>
+        <span class="profile">
+            {% load static %}
+            {% if is_user_auth %}
+                {% if user.is_superuser %}
+                    <a href="/main_panel"><img src="{% static '/images/control_panel.png' %}" class="control-panel-button profile-items"></a>
+                {% endif %}
+                <a href="/settings"><img src="{% static '/images/settings.png' %}" class="settings-button profile-items"></a>
+                <a href="/profile/{{ user.id }}"><img src="{{ user_photo }}" class="profile-img"></a>
+            {% endif %}
+            {% for item in auth %}
+                <a class="profile-items menu-buttons" href="{{ item.link }}">{{ item.text }}</a>
+            {% endfor %}
+        </span>
+    </div>
+</div>
+
+
