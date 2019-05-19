@@ -1,6 +1,6 @@
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
-from base.models import UserProfile
+from base.models import UserProfile, ProductTags
 
 
 
@@ -71,6 +71,43 @@ def upload_photo(up_file, file_name, old_photo):
 
 def get_user_info(request, user):
     return UserProfile.objects.get(user=User.objects.get(username=user).id)
+
+
+def check_new_tags(type, color, stone, mg, md):
+
+    for type_tag in type.split():
+        type_tag = type_tag.lower()
+        if not type_tag in [tag.tag_name for tag in ProductTags.objects.filter(type="simple")]:
+            new_tag = ProductTags(tag_name=type_tag, type="simple")
+            new_tag.save()
+
+    for color_tag in color.split():
+        color_tag = color_tag.lower()
+        if not color_tag in [tag.tag_name for tag in ProductTags.objects.filter(type="color")]:
+            new_tag = ProductTags(tag_name=color_tag, type="color")
+            new_tag.save()
+
+    for stone_tag in stone.split():
+        stone_tag = stone_tag.lower()
+        if not stone_tag in [tag.tag_name for tag in ProductTags.objects.filter(type="stone")]:
+            new_tag = ProductTags(tag_name=stone_tag, type="stone")
+            new_tag.save()
+
+    for mg_tag in mg.split():
+        mg_tag = mg_tag.lower()
+        if not mg_tag in [tag.tag_name for tag in ProductTags.objects.filter(type="mgchar")]:
+            new_tag = ProductTags(tag_name=mg_tag, type="mgchar")
+            new_tag.save()
+
+    for md_tag in md.split():
+        md_tag = md_tag.lower()
+        if not md_tag in [tag.tag_name for tag in ProductTags.objects.filter(type="mdchar")]:
+            new_tag = ProductTags(tag_name=md_tag, type="mdchar")
+            new_tag.save()
+
+
+
+
 
 
 

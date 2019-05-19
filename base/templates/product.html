@@ -14,22 +14,16 @@
     <div class="product-name-block">
         {{ product.name }}
     </div>
-    <div class="photos-block">
-        <center>
 
-            <div class="photo-container"></div>
-            <div class="photo-container"></div>
-            <div class="photo-container"></div>
-        </center>
-    </div>
-    <div class="photos-block">
-        <center>
-
-            <div class="photo-container"></div>
-            <div class="photo-container"></div>
-            <div class="photo-container"></div>
-        </center>
-    </div>
+    {% for photos_group in photos_list %}
+        <div class="photos-block">
+            <center>
+                {% for photo in photos_group %}
+                    <img src="{{ photo }}" class="photo-container">
+                {% endfor %}
+            </center>
+        </div>
+    {% endfor %}
 
     <div class="price-block">{{ product.price }} рублей</div>
 

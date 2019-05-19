@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from base.forms import SignInForm
 from django.template import RequestContext
-from base.functions import get_base_context, is_existing_user, get_request_products, upload_photo, get_user_info
+from base.functions import get_base_context, is_existing_user, get_request_products, upload_photo, get_user_info, check_new_tags
 from django.contrib.auth.hashers import check_password
 import datetime
 
@@ -138,8 +138,23 @@ def product_page(request, id):
     context = get_base_context(request, product_info.name)
     context['product'] = product_info
     context['tags'] = product_info.tags.split()
-    # context['photos'] = product_info.photos.split()
     context['comments'] = Comment.objects.filter(product_id=product_info.id)
+
+    photos = product_info.photo.split(sep=",")
+    photos_list = []
+    photos_group = []
+
+    for i in range(len(photos)):
+        if photos[i] != '':
+            photos_group.append(photos[i])
+
+            if (i + 1) % 3 == 0 or i + 1 == len(photos):
+                photos_list.append(photos_group)
+                photos_group = []
+
+    print(photos_list)
+
+    context['photos_list'] = photos_list
 
     return render(request, 'product.html', context=context)
 
@@ -429,7 +444,9 @@ def create_product_page(request):
         short_description = request.POST.get('short_description')
         description = "<pre>" + request.POST.get('description') + "</pre>"
 
+        check_new_tags(type, color, stone, mg, md)
         tags = type.lower() + " " + color.lower() + " " + stone.lower() + " " + mg.lower() + " " + md.lower()
+
         photos = ""
 
         for photo in request.FILES.getlist('photos'):
@@ -437,6 +454,8 @@ def create_product_page(request):
 
         new_product = Product(name=name, price=price, tags=tags, preview_describe=short_description, describe=description, is_distributing=True, photo=photos)
         new_product.save()
+
+        return HttpResponseRedirect('/product/' + str(new_product.id))
 
     return render(request, 'admin/create_product.html', context=context)
 
