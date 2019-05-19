@@ -147,12 +147,12 @@ def product_page(request, id):
     for i in range(len(photos)):
         if photos[i] != '':
             photos_group.append(photos[i])
+        else:
+            photos_list.append(photos_group)
 
-            if (i + 1) % 3 == 0 or i + 1 == len(photos):
-                photos_list.append(photos_group)
-                photos_group = []
-
-    print(photos_list)
+        if (i + 1) % 3 == 0:
+            photos_list.append(photos_group)
+            photos_group = []
 
     context['photos_list'] = photos_list
 
@@ -450,7 +450,7 @@ def create_product_page(request):
         photos = ""
 
         for photo in request.FILES.getlist('photos'):
-            photos += upload_photo(photo, "products/product" + str(len(Product.objects.all())) + photo.name, "") + ","
+            photos += upload_photo(photo, "products/product" + str(len(Product.objects.all())) + "/" + photo.name, "") + ","
 
         new_product = Product(name=name, price=price, tags=tags, preview_describe=short_description, describe=description, is_distributing=True, photo=photos)
         new_product.save()
