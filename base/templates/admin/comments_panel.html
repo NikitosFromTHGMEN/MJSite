@@ -3,7 +3,81 @@
 {% block extended_css %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/admin/comments_panel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comments.css' %}">
+{% endblock %}
+
+{% block extended_js %}
+    <script src="{% static 'js/admin/comments_panel.js' %}"></script>
+    <script src="{% static 'js/product.js' %}"}></script>
 {% endblock %}
 
 {% block content %}
+    <div class="table-header">
+        <div class="table-header-actions-block">
+            <a href="/comments_panel/{{ pages.current }}" class="table-header-action">Все</a>
+            <a href="/comments_panel/{{ pages.current }}?filter=today" class="table-header-action">Сегодня</a>
+        </div>
+        <div class="search-comment-block">
+            <input id="SearchCommentField" type="text" class="search-comment-field" placeholder="01.01.1970">
+            <button class="search-comment-btn" onclick="search_comment();">Поиск</button>
+        </div>
+    </div>
+
+    <div class="user-comments" id="CommentsBlock1">
+        <div class="comments-header">
+            <div class="comments-header-item comments-header-active-item" id="CommentsBtn" onclick="switch_to_comments1()">Комментарии ({{ cur_comments_count }}/{{ comments_count }})</div>
+            <div class="comments-header-item" id="Comments1Btn" onclick="switch_to_comments2()">Отзывы ({{ cur_comments1_count }}/{{ comments1_count }})</div>
+        </div>
+        {% if cur_comments_count == 0 %}
+            <div class="no-comments">Нет комментариев...</div>
+        {% endif %}
+
+        {% for comment in comments %}
+            <div class="comment">
+                <a href="/profile/{{ comment.author.user.id }}">
+                    <div class="comment-author-block">
+                        <img src="{{ comment.author.photo }}" class="comment-author-photo">
+                        <div class="comment-author-info">{{ comment.author.user.first_name }}</div>
+                    </div>
+                </a>
+                <div class="comment-content">{{ comment.text }}</div>
+                {% if admin_profile.can_delete_comments %}
+                    <div class="comment-actions-block">
+                        <a href="?delete=0,{{ comment.id }}"><img src="{% static 'images/abort-icon.png' %}" class="comment-delete-btn"></a>
+                    </div>
+                {% endif %}
+                <div class="comment-time">{{ comment.time|date:"d.m.Y H:i" }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="user-comments hidden" id="CommentsBlock2">
+        <div class="comments-header">
+            <div class="comments-header-item" id="CommentsBtn" onclick="switch_to_comments1()">Комментарии ({{ cur_comments_count }}/{{ comments_count }})</div>
+            <div class="comments-header-item comments-header-active-item" id="Comments1Btn" onclick="switch_to_comments2()">Отзывы ({{ cur_comments1_count }}/{{ comments1_count }})</div>
+        </div>
+        {% if cur_comments1_count == 0 %}
+            <div class="no-comments">Нет отзывов</div>
+        {% endif %}
+
+        {% for comment in comments1 %}
+            <div class="comment">
+                <a href="/profile/{{ comment.author.user_id }}">
+                    <div class="comment-author-block">
+                        <img src="{{ comment.author.photo }}" class="comment-author-photo">
+                        <div class="comment-author-info">{{ comment.author.user.first_name }}</div>
+                    </div>
+                </a>
+                <div class="comment-content">{{ comment.text }}</div>
+                {% if admin_profile.can_delete_comments %}
+                    <div class="comment-actions-block">
+                        <a href="?delete=1,{{ comment.id }}"><img src="{% static 'images/abort-icon.png' %}" class="comment-delete-btn"></a>
+                    </div>
+                {% endif %}
+                <div class="comment-time">{{ comment.time|date:"d.m.Y H:i" }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    {% include "page_changer.html" %}
 {% endblock %}

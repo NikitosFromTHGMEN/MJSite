@@ -3,6 +3,7 @@
 {% block extended_css %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/create_order.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Neucha" rel="stylesheet">
 {% endblock %}
 
 
@@ -14,18 +15,18 @@
 
 {% block content %}
     <center>
-        <span class="order-header">Заказ № {{ order_number }}</div>
+        <div class="order-header">Заказ № {{ order_number }}</div>
     </center>
 
     <a href="/product/{{ product.id }}" target="_blank">
         <div class="product-info-block">
-            <img src="" class="product-img">
+            <img src="{{ photo }}" class="product-img">
             <div class="product-info">
                 <div class="product-info-header">
                     {{ product.name }}
                 </div>
                 <div>
-                    {{ product.describe }}
+                    {{ product.describe|safe }}
                 </div>
             </div>
             <div class="product-price-block">
@@ -59,6 +60,10 @@
                     <div class="help-msg">Номер для обратной связи</div>
                 </div>
                 <input type="text" id="phone_number" class="form-item" maxlength="12" value="{{ user_info.phone_number }}" name="phone_number">
+            </div>
+            <div class="form-wishes-block">
+                <label for="WishesBlock" class="form-label">Пожелания:</label>
+                <textarea id="WishesBlock" class="form-item" maxlength="1000" name="wishes"></textarea>
             </div>
         </form>
     </div>

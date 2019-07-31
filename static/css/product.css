@@ -17,7 +17,7 @@
     display: inline-block;
     vertical-align: middle;
     background-size: cover;
-    background-image: url('https://pp.userapi.com/c852232/v852232791/4eda3/BGqSyR5qaLU.jpg');/*https://pp.userapi.com/c849132/v849132286/e5a39/nQ5Rj3ALilw.jpg');*/
+    background-color: white;
     background-repeat: no-repeat;
 }
 
@@ -34,15 +34,20 @@
 
 
 .info-block {
+    margin: 50 100 0 100px;
+    padding: 30px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.info-block-text {
+    width: 1000px;
     font-family: 'Neucha';
     font-style: normal;
     font-size: 16pt;
     color: black;
-    margin: 50 100 0 100px;
-    padding: 30px;
     font-weight: 550;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
+    white-space: pre-wrap;
 }
 
 .alert-block {
@@ -120,7 +125,6 @@
     transform: scale(1.2);
     transition: 1s;
 }
-
 
 
 

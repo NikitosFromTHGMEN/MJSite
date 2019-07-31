@@ -4,22 +4,29 @@
 <div class="head-image"></div>
 <div class="head">
     <div class="menu">
-        <a class="menu-buttons" href="/catalog">Каталог</a>
+        <a class="menu-buttons" href="/catalog/1">Каталог</a>
         <a class="menu-buttons" href="/search">Поиск</a>
         <span class="profile">
-            {% load static %}
-            {% if is_user_auth %}
-                {% if user.is_superuser %}
-                    <a href="/main_panel"><img src="{% static '/images/control_panel.png' %}" class="control-panel-button profile-items"></a>
+            <div class="profile-dropdown">
+                {% load static %}
+                {% if is_user_auth %}
+                    <img src="{{ user_photo }}" class="profile-img" onclick="ProfileDropDown.classList.toggle('show');">
+                    <div class="profile-dropdown-content" id="ProfileDropDown">
+                        <a href="/profile/{{ user.id }}"><div class="profile-dropdown-content-item">Профиль</div></a>
+                        <a href="/orders_list/{{ user.id }}"><div class="profile-dropdown-content-item">Мои заказы</div></a>
+                        <a href="/settings"><div class="profile-dropdown-content-item">Настройки</div></a>
+
+                        {% if user.is_superuser %}
+                            <a href="/main_panel"><div class="profile-dropdown-content-item">Панель управления</div></a>
+                        {% endif %}
+                        <a href="/logout"><div class="profile-dropdown-content-item">Выйти</div></a>
+                    </div>
+                {% else %}
+                    <a class="profile-items menu-buttons" href="/login">Войти</a>
+                    <a class="profile-items menu-buttons" href="/sign_up">Регистрация</a>
                 {% endif %}
-                <a href="/settings"><img src="{% static '/images/settings.png' %}" class="settings-button profile-items"></a>
-                <a href="/profile/{{ user.id }}"><img src="{{ user_photo }}" class="profile-img"></a>
-            {% endif %}
-            {% for item in auth %}
-                <a class="profile-items menu-buttons" href="{{ item.link }}">{{ item.text }}</a>
-            {% endfor %}
+            </div>
         </span>
     </div>
 </div>
-
 

@@ -64,7 +64,7 @@
     border-style: solid;
     border-radius: 4px;
     display: inline-block;
-    background-image: url('https://pp.userapi.com/c847124/v847124262/15b41e/fkAzzhjiRS4.jpg');
+    background-color: white;
     background-size: cover;
     background-position: -15 0px;
     background-repeat: no-repeat;
@@ -90,7 +90,6 @@
     border: 1px solid aquamarine;
     transition: 0.5s;
 }
-
 
 
 

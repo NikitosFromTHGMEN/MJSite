@@ -6,15 +6,19 @@
     <link rel="stylesheet" href="{% static 'css/comments.css' %}">
 {% endblock %}
 
+{% block extended_js %}
+    <script src="{% static 'js/product.js'%}"></script>
+{% endblock %}
+
 
 {% block content %}
     <div class="account">
         <div class="account-info">
-            <img src="{{ user_photo }}" class="account-img" alt="">
-            <div class="account-name">{{ user.first_name }} {{ user.last_name }}</div>
+            <img src="{{ user_profile_info.photo }}" class="account-img" alt="">
+            <div class="account-name">{{ user_profile.first_name }} {{ user_profile.last_name }}</div>
             <div class="account-second-info">
-                Дата рождения: {{ date_of_birth }}<br><br>
-                Дата регистрации: {{ reg_date }}
+                Дата рождения: {{ user_profile_info.date_of_birth|date:"d.m.Y" }}<br><br>
+                Дата регистрации: {{ user_profile.date_joined|date:"d.m.Y" }}
             </div>
         </div>
         <div class="user-purcashes">
@@ -22,36 +26,74 @@
             <div class="purcashes-items">
                 {% for order_list in last_orders %}
                     <div>
-                        {% for order in order_list %}
-                            <a href="/product/{{ order.product.id }}">
-                                <img src="{{ order.product.photo }}" class="product-item">
+                        {% for item in order_list %}
+                            <a href="/product/{{ item.order.product.id }}" style="display: inline-block; vertical-align: top;">
+                                <img src="{{ item.product_photo }}" class="product-item">
                             </a>
                         {% endfor %}
                     </div>
                 {% endfor %}
             </div>
             <center>
-                <a href="/orders_list/{{ user.id }}">
+                <a href="/orders_list/{{ user_profile_info.id }}">
                     <button class="all-orders-btn">Все заказы</button>
                 </a>
             </center>
         </div>
     </div>
-    <div class="user-comments">
+
+    <div class="user-comments" id="CommentsBlock1">
         <div class="comments-header">
-            <b>Комментарии, оставленные пользователем</b>
+            <div class="comments-header-item comments-header-active-item" id="CommentsBtn" onclick="switch_to_comments1()">Комментарии ({{ comments_count }})</div>
+            <div class="comments-header-item" id="Comments1Btn" onclick="switch_to_comments2()">Отзывы ({{ comments1_count }})</div>
         </div>
+        {% if not comments %}
+            <div class="no-comments">Пользователь не оставил ни одного комментария</div>
+        {% endif %}
+
         {% for comment in comments %}
             <div class="comment">
-                <a href="/product/{{ comment.product.id }}">
+                <a href="/product/{{ comment.comment.product.id }}">
                     <div class="comment-author-block">
-                        <img src="{{ comment.product.photo }}" class="comment-author-photo">
+                        <img src="{{ comment.product_photo }}" class="comment-author-photo">
                     </div>
                 </a>
-                <div class="comment-content">
-                    {{ comment.text }}
-                </div>
+                <div class="comment-content">{{ comment.comment.text }}</div>
+                {% if user_info.id == comment.comment.author.id %}
+                    <div class="comment-actions-block">
+                        <a href="/delete_comment/0,{{ comment.comment.id }}"><img src="{% static 'images/abort-icon.png' %}" class="comment-delete-btn"></a>
+                    </div>
+                {% endif %}
+                <div class="comment-time">{{ comment.comment.time|date:"d.m.Y H:i" }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="user-comments hidden" id="CommentsBlock2">
+        <div class="comments-header">
+            <div class="comments-header-item" id="CommentsBtn" onclick="switch_to_comments1()">Комментарии ({{ comments_count }})</div>
+            <div class="comments-header-item comments-header-active-item" id="Comments1Btn" onclick="switch_to_comments2()">Отзывы ({{ comments1_count }})</div>
+        </div>
+        {% if not comments1 %}
+            <div class="no-comments">Пользователь не оставил ни одного отзыва</div>
+        {% endif %}
+
+        {% for comment in comments1 %}
+            <div class="comment">
+                <a href="/product/{{ comment.comment.product.id }}">
+                    <div class="comment-author-block">
+                        <img src="{{ comment.product_photo }}" class="comment-author-photo">
+                    </div>
+                </a>
+                <div class="comment-content">{{ comment.comment.text }}</div>
+                {% if user_info.id == comment.comment.author.id %}
+                    <div class="comment-actions-block">
+                        <a href="/delete_comment/1,{{ comment.comment.id }}"><img src="{% static 'images/abort-icon.png' %}" class="comment-delete-btn"></a>
+                    </div>
+                {% endif %}
+                <div class="comment-time">{{ comment.comment.time|date:"d.m.Y H:i" }}</div>
             </div>
         {% endfor %}
     </div>
 {% endblock %}
+
+

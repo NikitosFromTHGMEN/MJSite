@@ -1,0 +1,57 @@
+#background {
+    width: 60%;
+    height: 80%;
+    margin-left: 50px;
+    margin-top: 50px;
+    display: inline-block;
+}
+
+.feedback-block {
+    width: 400px;
+    height: 535px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 40px;
+    margin-top: 30px;
+}
+
+.reason-block {
+    margin: 0 10 10 10px;
+}
+
+.reason-area, .report-area {
+    margin-left: 15px;
+    width: 350px;
+    height: 175px;
+    resize: none;
+    color: black;
+    position: relative;
+}
+
+.report-block {
+    margin: 10px;
+}
+
+h2 {
+    font-family: 'Arial';
+    color: gray;
+}
+
+.confirm-btn {
+    width: 90px;
+    text-align: center;
+    padding: 5 10px;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-top: 30px;
+    position: absolute;
+    right: 70px;
+    transition: 1s;
+}
+
+.confirm-btn:hover {
+    transition: 0.5s;
+    transform: scale(1.1);
+}

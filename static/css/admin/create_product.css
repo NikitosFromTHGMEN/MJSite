@@ -1,46 +1,103 @@
 .product-block {
+    position: relative;
     margin: 0 100px 0 100px;
-    height: 800px;
 }
 
-.forms {
+.base-info {
     top: 30px;
-    width: 700px;
-    text-align: left;
+    width: 1200px;
 }
 
-.form-field {
-    margin-bottom: 30px;
+.base-info-field {
+    margin-right: 120px;
+    display: inline-block;
 }
 
-.form-item {
-    border-radius: 5px;
-    width: 338px;
+.description-block {
+    width: 1200px;
+    margin-top: 50px;
+}
+
+.description-field {
+    display: inline-block;
+    width: 600px;
+    margin-right: 140px;
+}
+
+.parameters-block {
+    width: 1200px;
+    margin-top: 50px;
+}
+
+.parameters-field {
+    width: 280px;
+    display: inline-block;
+    margin-right: 100px;
+    vertical-align: top;
+}
+
+.info-item {
     height: 30px;
+    border-radius: 5px;
     transition: 1s;
     border: 1px solid gray;
-    float: right;
-    display: inline-block;
+    display: block;
+    margin-top: 10px;
+    margin-left: 20px;
     padding-left: 5px;
 }
 
-.form-item:focus {
+.info-item:focus {
     border: 1px solid aquamarine;
     transition: 0.1s;
+    display: block;
 }
 
-.form-label {
+.parameters-info-item {
+    margin-top: 10px;
+    height: 30px;
+}
+
+.parameters-info-item>.info-item {
+    margin-top: 0px;
+}
+
+label {
     font-size: 12pt;
     font-family: 'Arial';
 }
 
-#ProductDescriptionBlock {
-    margin-top: 100px;
+#ProductName {
+    width: 600px;
+}
+
+#ProductPrice {
+    width: 90px;
+}
+
+
+#ProductDescription {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 600px;
+    height: 200px;
+}
+
+
+#ProductShortDescription {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 338px;
+    height: 200px;
+}
+
+#ProductShortDescriptionBlock {
+    margin-right: 0px;
+    width: 338px;
 }
 
 .textarea-base {
     resize: none;
-    float: right;
     transition: 1s;
     border: 1px solid gray;
     border-radius: 5px;
@@ -51,35 +108,55 @@
     transition: 0.1s;
 }
 
-#ProductShortDescription {
-    width: 338px;
-    height: 100px;
-}
-
-#ProductDescription {
-    width: 600px;
-    height: 200px;
-}
 
 #UploadPhotosBlock {
-    margin-top: 250px;
+    margin-top: 100px;
 }
 
 #SubmitButton {
-    margin-top: 30px;
-    height: 30px;
-    font-size: 12pt;
+    width: 90px;
+    margin-top: 60px;
+    height: 20px;
+    color: black;
+    font-size: 10pt;
     font-family: 'Arial';
     background-color: white;
     border: 1px solid gray;
     border-radius: 5px;
     transition: 1s;
-    padding: 0 15 0 15px;
+    padding: 10 0 5 0px;
+    text-align: center;
+    font-weight: bold;
 }
 
 #SubmitButton:hover {
     transition: 0.2s;
     transform: scale(1.1);
+}
+
+.add-item-btn, .remove-item-btn {
+    position: relative;
+    top: 5px;
+    left: 170px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-size: cover;
+    transition: 0.1s;
+}
+
+.add-item-btn2 {
+    left: 60px;
+}
+
+.add-item-btn:hover, .remove-item-btn:hover {
+    transition: 0.2s;
+    transform: scale(1.2);
+}
+
+.remove-item-btn {
+    left: 210px;
+    top: -25px;
 }
 
 

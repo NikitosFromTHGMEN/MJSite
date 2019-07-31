@@ -1,9 +1,116 @@
 {% extends 'base.html' %}
 
+
 {% block extended_css %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/admin/admins_panel.css' %}">
 {% endblock %}
 
+
+{% block extended_js %}
+    {% load static %}
+    <script src="{% static 'js/admin/admins_panel.js' %}"></script>
+{% endblock %}
+
+
 {% block content %}
+    {% load static %}
+    <div class="actions-panel">
+        <div class="table-header-actions-block">
+            <a href="/admins_panel/{{ pages.current }}" class="table-header-action">Все</a>
+            <a href="/admins_panel/{{ pages.current }}?filter=banned" class="table-header-action">Заблокированные</a>
+            <a href="/admins_panel/{{ pages.current }}?filter=admins" class="table-header-action">Администраторы</a>
+        </div>
+        <div class="search-user-block">
+            <input id="SearchUserField"type="text" class="search-user-field" placeholder="Введите имя">
+            <button class="search-user-btn" onclick="search_user();">Поиск</button>
+        </div>
+    </div>
+
+    {% for user in users %}
+        <div class="user-block">
+            <a href="/profile/{{ user.user.id }}">
+                <img src="{{ user.photo }}" class="user-photo">
+            </a>
+            <table class="user-table">
+                    <tr class="user-table-header">
+                        <td>Логин</td>
+                        <td>Имя</td>
+                        <td>Фамилия</td>
+                        <td>Email</td>
+                        <td>Телефон</td>
+                    </tr>
+                    <tr>
+                        <td>{{ user.user.username }}</td>
+                        <td>{{ user.user.first_name }}</td>
+                        <td>{{ user.user.last_name }}</td>
+                        <td>{{ user.user.email }}</td>
+                        <td>{{ user.phone_number }}</td>
+                    </tr>
+            </table>
+            <table class="user-table table2">
+                <tr class="user-table-header">
+                    <td>Статус</td>
+                    <td>Админ</td>
+                    <td>Дата рождения</td>
+                    <td>Последний вход</td>
+                    <td>Дата регистрации</td>
+                </tr>
+                <tr>
+                    {% if user.user.is_active %}
+                        {% if user.is_banned %}
+                        <td>Заблокирован</td>
+                        {% else %}
+                            <td>Активен</td>
+                        {% endif %}
+                    {% else %}
+                        <td>Удалён</td>
+                    {% endif %}
+
+                    {% if user.user.is_superuser %}
+                        <td>Да</td>
+                    {% else %}
+                        <td>Нет</td>
+                    {% endif %}
+                    <td>{{ user.date_of_birth|date:"d.m.Y" }}</td>
+                    <td>{{ user.user.last_login|date:"d.m.Y H:i"}}</td>
+                    <td>{{ user.user.date_joined|date:"d.m.Y" }}</td>
+                </tr>
+            </table>
+            <div class="user-actions-block">
+                {% if admin_profile.can_ban_users %}
+                    <div class="dropdown">
+                        {% if user.is_banned %}
+                            <a href="?ban=0,{{ user.user.id }},''"><img src="{% static 'images/unban-icon.png'%}" class="user-ban-btn"></a>
+                        {% else %}
+                            <img src="{% static 'images/ban_icon.jpg'%}" class="user-ban-btn" onclick="BanReasonBlock{{ user.id }}.classList.toggle('show')">
+                            <div class="dropdown-content" id="BanReasonBlock{{ user.id }}">
+                                <textarea class="ban-reason-area" id="BanReasonArea{{ user.id }}" placeholder="Причина блокировки"></textarea>
+                                <button class="ban-btn" onclick="ban_submit({{ user.user.id }});">заблокировать</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if admin_profile.can_create_admins %}
+                    <a href="/appoint_admin/{{ user.id }}"><img src="{% static 'images/make-admin-icon.webp'%}" class="user-make-admin-btn"></a>
+                {% endif %}
+                {% if admin_profile.can_ban_users %}
+                    <div class="dropdown">
+                        {% if user.is_banned %}
+                            {% if user.is_reported == 1 %}
+                                <img src="{% static 'images/report-icon.png'%}" class="user-ban-report-btn" onclick="BanReportBlock{{ user.id }}.classList.toggle('show')">
+                                <div class="dropdown-content" id="BanReportBlock{{ user.id }}">
+                                    <textarea class="ban-report-area" id="BanReportArea{{ user.id }}" readonly>{{ user.report_text }}</textarea>
+                                    <a href="/admins_panel/{{ pages.current }}?ban_report=0,{{ user.id }}"><button class="cancel-report-btn">Отклонить</button></a>
+                                    <a href="/admins_panel/{{ pages.current }}?ban_report=1,{{ user.id }}"><button class="accept-report-btn">Принять</button></a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% include "page_changer.html" %}
 {% endblock %}

@@ -92,9 +92,11 @@
         <a id="SearchButton" href="/search/"><button class="search-confirm-button" onclick="get_search_ref();">Поиск</button></a>
     </div>
     <div class="content-block">
-        {% for product in products %}
-            <a href="/product/{{ product.id }}" class="content-item">
-                <div class="content-item-fill">
+        {% for item in products %}
+            <a href="/product/{{ item.product.id }}" class="content-item">
+                <img src="{{ item.photo }}" class="content-item-fill">
+                <div class="content-item-fill-text">
+                    {{ item.product.preview_describe }}
                 </div>
             </a>
         {% endfor %}

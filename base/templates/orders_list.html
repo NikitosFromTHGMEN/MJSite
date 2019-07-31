@@ -8,9 +8,9 @@
 
 
 {% block content %}
-    <div class="main-header">
-        Все заказы пользователя <a class="profile-ref" href="/profile/{{ user_info.user.id }}">{{ user_info.user.first_name }} {{ user_info.user.last_name }}</a>:
-    </div>
+    <h1 class="main-header">
+        Все заказы пользователя <a class="profile-ref" href="/profile/{{ user_info.user.id }}">{{ user_info.user.first_name }} {{ user_info.user.last_name }}</a> ({{ orders_count }}):
+    </h1>
 
     <div class="status-block">
         <div class="status-describe">
@@ -35,31 +35,43 @@
             <td id="size-column">Размер</td>
             <td id="price-column">Цена (руб.)</td>
             <td id="status-column">Статус</td>
+            <td>Отзыв</td>
         </tr>
 
         {% for order in orders %}
             <tr>
-                <td>{{ order.time|date:"d.m.Y H:i" }}</td>
+                <td>{{ order.order.time|date:"d.m.Y H:i" }}</td>
                 <td class="name-column">
-                    {% if order.product.name %}
-                    <a href="/product/{{ order.product.id }}" target="_blank">{{ order.product.name }}</a>
+                    {% if order.order.product.name %}
+                    <a href="/product/{{ order.order.product.id }}" target="_blank">{{ order.order.product.name }}</a>
                     {% else %}
                         Товар удалён
                     {% endif %}
                 </td>
-                <td>{{ order.count }}</td>
-                <td>{{ order.size }}</td>
-                <td>{{ order.price }}</td>
+                <td>{{ order.order.count }}</td>
+                <td>{{ order.order.size }}</td>
+                <td>{{ order.order.price }}</td>
                 <td>
                     {% load static%}
-                    {% if order.status == "p" %}
+                    {% if order.order.status == "p" %}
                         <img class="status-icon" src="{% static 'images/process-icon.png'%}">
-                    {% elif order.status == "a" %}
+                    {% elif order.order.status == "a" %}
                         <img class="status-icon" src="{% static 'images/accept-icon.png'%}">
-                    {% elif order.status == "c" %}
+                    {% elif order.order.status == "c" %}
                         <img class="status-icon" src="{% static 'images/abort-icon.png'%}">
-                    {% elif order.status == "d" %}
+                    {% elif order.order.status == "d" %}
                         <img class="status-icon" src="{% static 'images/done-icon.png' %}">
+                    {% endif %}
+                </td>
+                <td>
+                    {% if order.comment %}
+                        Есть
+                    {% else %}
+                        {% if order.order.status == "d" %}
+                            Нет
+                        {% else %}
+                            -
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>

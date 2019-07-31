@@ -8,6 +8,10 @@ class UserProfile(models.Model):
     date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=11)
     photo = models.CharField(max_length=1000, default='')
+    is_banned = models.BooleanField(default=False)
+    ban_reason = models.CharField(default="", max_length=1000)
+    is_reported = models.IntegerField(default=0)
+    report_text = models.TextField(default="", max_length="1000")
 
 
 class Product(models.Model):
@@ -24,6 +28,14 @@ class Comment(models.Model):
     author = models.ForeignKey(to=UserProfile, on_delete=models.CASCADE, default=0)
     product = models.ForeignKey(to=Product, on_delete=models.SET_NULL, default=0, null=True)
     text = models.CharField(max_length=255)
+    time = models.DateTimeField(default=datetime.datetime.now())
+
+
+class Comment1(models.Model):
+    author = models.ForeignKey(to=UserProfile, on_delete=models.CASCADE, default=0)
+    product = models.ForeignKey(to=Product, on_delete=models.SET_NULL, default=0, null=True)
+    text = models.CharField(max_length=255)
+    time = models.DateTimeField(default=datetime.datetime.now())
 
 
 class ProductTags(models.Model):
@@ -48,6 +60,9 @@ class Orders(models.Model):
     )
 
     status = models.CharField(max_length=1, choices=STATUS, default='p')
+    customer_status = models.CharField(max_length=1, default="n")
+    customer_wishes = models.TextField(max_length=1000, default="")
+    cancel_reason = models.CharField(max_length=1000, default="")
 
 
 class AdminProfile(models.Model):
@@ -55,20 +70,24 @@ class AdminProfile(models.Model):
     """
       permissions
     """
-    see_products_panel = models.BooleanField()
-    can_create_products = models.BooleanField()
-    can_edit_products = models.BooleanField()
+    see_products_panel = models.BooleanField(default=False)
+    can_create_products = models.BooleanField(default=False)
+    can_edit_products = models.BooleanField(default=False)
+    can_remove_products = models.BooleanField(default=False)
+    can_distribute_products = models.BooleanField(default=False)
     #
-    see_orders_panel = models.BooleanField()
-    can_check_orders_info = models.BooleanField()
-    can_edit_orders = models.BooleanField()
+    see_orders_panel = models.BooleanField(default=False)
+    can_check_orders_info = models.BooleanField(default=False)
+    can_edit_orders = models.BooleanField(default=False)
     #
-    see_comments_panel = models.BooleanField()
-    can_delete_comments = models.BooleanField()
+    see_comments_panel = models.BooleanField(default=False)
+    can_delete_comments = models.BooleanField(default=False)
     #
-    see_admins_panel = models.BooleanField()
-    can_delete_admins = models.BooleanField()
-    can_create_admins = models.BooleanField()
-
-
-
+    see_admins_panel = models.BooleanField(default=False)
+    can_ban_users = models.BooleanField(default=False)
+    can_create_admins = models.BooleanField(default=False)
+    can_demote_admins = models.BooleanField(default=False)
+    can_edit_products_section = models.BooleanField(default=False)
+    can_edit_orders_section = models.BooleanField(default=False)
+    can_edit_comments_section = models.BooleanField(default=False)
+    can_edit_admins_section = models.BooleanField(default=False)

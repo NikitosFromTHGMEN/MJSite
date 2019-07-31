@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin/appoint_admin.css' %}">
+{% endblock %}
+
+
+{% block extended_js %}
+    {% load static %}
+    <script src="{% static 'js/admin/appoint_admin.js' %}"></script>
+    <script>
+        check_all_rights("{{ admin_profile.can_edit_products_section }}", "{{ admin_profile.can_edit_orders_section }}", "{{ admin_profile.can_edit_comments_section }}",
+                         "{{ admin_profile.can_edit_admins_section }}", "{{ edit_user_admin.see_products_panel }}", "{{ edit_user_admin.can_create_products }}",
+                         "{{ edit_user_admin.can_edit_products }}", "{{ edit_user_admin.can_remove_products }}", "{{ edit_user_admin.can_distribute_products }}",
+                         "{{ edit_user_admin.see_orders_panel}}", "{{ edit_user_admin.can_check_orders_info }}", "{{ edit_user_admin.can_edit_orders }}",
+                         "{{ edit_user_admin.see_comments_panel }}", "{{ edit_user_admin.can_delete_comments }}", "{{ edit_user_admin.see_admins_panel }}",
+                         "{{ edit_user_admin.can_ban_users }}", "{{ edit_user_admin.can_create_admins }}", "{{ edit_user_admin.can_demote_admins }}",
+                         "{{ edit_user_admin.can_edit_products_section }}", "{{ edit_user_admin.can_edit_orders_section }}", "{{ edit_user_admin.can_edit_comments_section }}",
+                         "{{ edit_user_admin.can_edit_admins_section }}");
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    {% load static %}
+    <div class="user-block">
+        <a href="/profile/{{ user_profile.user.id }}">
+            <img src="{{ user_profile.photo }}" class="user-photo">
+        </a>
+        <table class="user-table">
+                <tr class="user-table-header">
+                    <td>Логин</td>
+                    <td>Имя</td>
+                    <td>Фамилия</td>
+                    <td>Email</td>
+                    <td>Телефон</td>
+                </tr>
+                <tr>
+                    <td>{{ user_profile.user.username }}</td>
+                    <td>{{ user_profile.user.first_name }}</td>
+                    <td>{{ user_profile.user.last_name }}</td>
+                    <td>{{ user_profile.user.email }}</td>
+                    <td>{{ user_profile.phone_number }}</td>
+                </tr>
+        </table>
+        <table class="user-table table2">
+            <tr class="user-table-header">
+                <td>Статус</td>
+                <td>Админ</td>
+                <td>Дата рождения</td>
+                <td>Последний вход</td>
+                <td>Дата регистрации</td>
+            </tr>
+            <tr>
+                {% if user_profile.user.is_active %}
+                    <td>Активен</td>
+                {% else %}
+                    <td>Удалён</td>
+                {% endif %}
+
+                {% if user_profile.user.is_superuser %}
+                    <td>Да</td>
+                {% else %}
+                    <td>Нет</td>
+                {% endif %}
+                <td>{{ user_profile.date_of_birth|date:"d.m.Y" }}</td>
+                <td>{{ user_profile.user.last_login|date:"d.m.Y H:i"}}</td>
+                <td>{{ user_profile.user.date_joined|date:"d.m.Y" }}</td>
+            </tr>
+        </table>
+    </div>
+    {% if admin_profile.can_edit_products_section %}
+        <div class="access-rights-block">
+            <div class="access-rights-header">Товары</div>
+            <div class="access-rights-content">
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="ProductsCanSee" type="checkbox" id="ProductsCanSee" onchange="check_all_products(1);">
+                    <label for="ProductsCanSee">Может видеть раздел товаров</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="ProductsCanCreate" type="checkbox" id="ProductsCanCreate" onchange="check_all_products(2);">
+                    <label for="ProductsCanCreate">Может создавать товары</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="ProductsCanEdit" type="checkbox" id="ProductsCanEdit" onchange="check_all_products(3);">
+                    <label for="ProductsCanEdit">Может редактировать товары</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="ProductsCanRemove" type="checkbox" id="ProductsCanRemove" onchange="check_all_products(4);">
+                    <label for="ProductsCanRemove">Может удалять товары</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="ProductsCanDistribute" type="checkbox" id="ProductsCanDistribute" onchange="check_all_products(5);">
+                    <label for="ProductsCanDistribute">Может убирать из раздачи товары</label>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if admin_profile.can_edit_orders_section %}
+        <div class="access-rights-block">
+            <div class="access-rights-header">Заказы</div>
+            <div class="access-rights-content">
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="OrdersCanSee" type="checkbox" id="OrdersCanSee" onchange="check_all_orders(1);">
+                    <label for="OrdersCanSee">Может видеть раздел заказов</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="OrdersCanCheck" type="checkbox" id="OrdersCanCheck" onchange="check_all_orders(2);">
+                    <label for="OrdersCanCheck">Может просматривать информацию о заказах</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="OrdersCanEdit" type="checkbox" id="OrdersCanEdit" onchange="check_all_orders(3);">
+                    <label for="OrdersCanEdit">Может изменять статус заказов</label>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if admin_profile.can_edit_comments_section %}
+        <div class="access-rights-block">
+            <div class="access-rights-header">Комментарии</div>
+            <div class="access-rights-content">
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="CommentsCanSee" type="checkbox" id="CommentsCanSee" onchange="check_all_comments(1);">
+                    <label for="CommentsCanSee">Может видеть раздел комментариев</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="CommentsCanDelete" type="checkbox" id="CommentsCanDelete" onchange="check_all_comments(2);">
+                    <label for="CommentsCanDelete">Может удалять комментарии</label>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if admin_profile.can_edit_admins_section %}
+        <div class="access-rights-block">
+            <div class="access-rights-header">Пользователи/Администраторы</div>
+            <div class="access-rights-content">
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanSee" type="checkbox" id="AdminsCanSee" onchange="check_all_admins(1);">
+                    <label for="AdminsCanSee">Может видеть раздел управления пользователями</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanBanUsers" type="checkbox" id="AdminsCanBanUsers" onchange="check_all_admins(2);">
+                    <label for="AdminsCanBanUsers">Может блокировать пользователей</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanCreateAdmin" type="checkbox" id="AdminsCanCreateAdmin" onchange="check_all_admins(3);">
+                    <label for="AdminsCanCreateAdmin">Может назначать администраторов</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanDemoteAdmin" type="checkbox" id="AdminsCanDemoteAdmin" onchange="check_all_admins(4);">
+                    <label for="AdminsCanDemoteAdmin">Может разжаловать администраторов</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanEditProducts" type="checkbox" id="AdminsCanEditProducts" onchange="check_all_admins(5);">
+                    <label for="AdminsCanEditProducts">Может изменять права раздела "товары"</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanEditOrders" type="checkbox" id="AdminsCanEditOrders" onchange="check_all_admins(6);">
+                    <label for="AdminsCanEditOrders">Может изменять права раздела "заказы"</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanEditComments" type="checkbox" id="AdminsCanEditComments" onchange="check_all_admins(7);">
+                    <label for="AdminsCanEditComments">Может изменять права раздела "комментарии"</label>
+                </div>
+                <div class="access-rights-field">
+                    <input form="AccessRightsForm" name="AdminsCanEditAdmins" type="checkbox" id="AdminsCanEditAdmins" onchange="check_all_admins(8);">
+                    <label for="AdminsCanEditAdmins">Может изменять права раздела "пользователи"</label>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <form method="post" id="AccessRightsForm">
+        {% csrf_token %}
+    </form>
+
+    <center>
+        {% if user_profile.user.is_superuser %}
+            <div class="save-btn" onclick="AccessRightsForm.submit()">Сохранить</div>
+            {% if admin_profile.can_demote_admins %}
+                <a href="?action=demote"><div class="demoted-to-admin-btn">Разжаловать администратора</div></a>
+            {% endif %}
+        {% else %}
+            <div class="appoint-admin-btn" onclick="AccessRightsForm.submit()">Назначить администратором</div>
+        {% endif %}
+    </center>
+{% endblock %}

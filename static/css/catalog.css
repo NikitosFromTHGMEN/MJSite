@@ -9,7 +9,7 @@
     width: 350px;
     height: 400px;
     background-color: white;#D1D6D5;
-    border-color: aquamarine;#B7EBF1;
+    border-color: aquamarine;
     border-width: 3px;
     border-style: solid;
     border-radius: 5px;
@@ -32,24 +32,30 @@
     background-position: -40 0px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('https://pp.userapi.com/c849132/v849132286/e5a39/nQ5Rj3ALilw.jpg');
-    text-indent: -99999px;
-    text-overflow: hidden;
-    color: black;
 }
 
-.content-item-fill:hover {
+.content-item-fill-text {
     font-family: 'Cormorant Infant';
     font-size: 14pt;
     font-style: italic;
     width: 338px;
-    height: 388px;;
+    height: 388px;
     border-width: 0px;
     margin: 10px;
     background-image: none;
     background-color: white;
     text-indent: 0%;
     text-overflow: clip;
+    color: black;
+    display: none;
+}
+
+.content-item:hover>img {
+    display: none;
+}
+
+.content-item:hover .content-item-fill-text {
+    display: block;
 }
 
 

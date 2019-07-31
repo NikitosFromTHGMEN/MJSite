@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin/create_product.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/edit_product.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block extended_js %}
+    {% load static %}
+    <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/admin/create_product.js'%}"></script>
+    <script src="{% static 'js/admin/edit_product.js'%}"></script>
+
+    <script>
+        get_color_tags();
+        get_stone_tags();
+        get_mg_tags();
+        get_md_tags();
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    {% load static %}
+    <div class="product-block">
+        <form method="post" class="base-info" id="ProductBaseInfo" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="base-info-field">
+                <label for="ProductName">Название товара:</label>
+                <input type="text" id="ProductName" class="info-item" name="name" form="ProductBaseInfo" value="{{ product.name }}">
+            </div>
+            <div class="base-info-field">
+                <label for="ProductPrice">Цена:</label>
+                <input type="number" class="info-item" id="ProductPrice" name="price" form="ProductBaseInfo" value="{{ product.price }}">
+            </div>
+        </form>
+
+        <div class="description-block">
+            <div class="description-field">
+                <label for="ProductDescription">Описание:</label>
+                <textarea class="textarea-base" name="description" id="ProductDescription" maxlength="5000" form="ProductBaseInfo">{{ product_description }}</textarea>
+            </div>
+            <div class="description-field" id="ProductShortDescriptionBlock">
+                <label for="ProductShortDescription">Краткое описание товара (для каталога):</label>
+                <textarea class="textarea-base" name="short_description" id="ProductShortDescription" form="ProductBaseInfo" maxlength="255">{{ product.preview_describe }}</textarea>
+            </div>
+        </div>
+
+        <div class="parameters-block">
+            <div class="parameters-field">
+                <label for="ProductType">Тип:</label>
+                <input type="text" name="type" class="info-item" id="ProductType" placeholder="Браслет" form="ProductBaseInfo">
+            </div>
+            <div class="parameters-field" id="ColorsFormFields" onchange="get_color_tags();">
+                <label for="ProductColor">Цвет:</label>
+                <img src="{% static 'images/add_btn.png'%}" class="add-item-btn" onclick="add_item('colors', 'Красный');">
+
+                {% for item in product_tags.color %}
+                    <div class="parameters-info-item">
+                        <input type="text" name="colors" class="info-item" id="ProductColor" placeholder="Красный" value="{{ item }}">
+                        <img src="{% static 'images/abort-icon.png' %}" class="remove-item-btn" name="colors_btn" onclick="delete_item(this)">
+                    </div>
+                {% endfor %}
+
+                <div class="parameters-info-item">
+                    <input type="text" name="colors" class="info-item" id="ProductColor" placeholder="Красный">
+                </div>
+            </div>
+            <div class="parameters-field" id="StonesFormFields" onchange="get_stone_tags();">
+                <label for="ProductStone">Камень:</label>
+                <img src="{% static 'images/add_btn.png'%}" class="add-item-btn" onclick="add_item('stones', 'Гранат');">
+
+                {% for item in product_tags.stone %}
+                    <div class="parameters-info-item">
+                        <input type="text" name="stones" class="info-item" id="ProductStone" placeholder="Гранат" value="{{ item }}">
+                        <img src="{% static 'images/abort-icon.png' %}" class="remove-item-btn" name="stones_btn" onclick="delete_item(this)">
+                    </div>
+                {% endfor %}
+
+                <div class="parameters-info-item">
+                    <input type="text" name="stones" class="info-item" id="ProductStone" placeholder="Гранат">
+                </div>
+            </div>
+        </div>
+        <div class="parameters-block">
+            <div class="parameters-field" id="MGFormFieilds" onchange="get_mg_tags();">
+                <label for="ProductMG">Магические свойства:</label>
+                <img src="{% static 'images/add_btn.png'%}" class="add-item-btn add-item-btn2" onclick="add_item('mg', 'Удача');">
+
+                {% for item in product_tags.mgchar %}
+                    <div class="parameters-info-item">
+                        <input type="text" name="mg" class="info-item" id="ProductMG" placeholder="Удача" value="{{ item }}">
+                        <img src="{% static 'images/abort-icon.png' %}" class="remove-item-btn" name="mg_btn" onclick="delete_item(this)">
+                    </div>
+                {% endfor %}
+
+                <div class="parameters-info-item">
+                    <input type="text" name="mg" class="info-item" id="ProductMG" placeholder="Удача">
+                </div>
+            </div>
+            <div class="parameters-field" id="MDFormFieilds" onchange="get_md_tags();">
+                <label for="ProductMD">Целебные свойства:</label>
+                <img src="{% static 'images/add_btn.png'%}" class="add-item-btn add-item-btn2" onclick="add_item('md', 'Почки');">
+
+                {% for item in product_tags.mdchar %}
+                    <div class="parameters-info-item">
+                        <input type="text" name="md" class="info-item" id="ProductMD" placeholder="Почки" value="{{ item }}">
+                        <img src="{% static 'images/abort-icon.png' %}" class="remove-item-btn" name="md_btn" onclick="delete_item(this)">
+                    </div>
+                {% endfor %}
+
+                <div class="parameters-info-item">
+                    <input type="text" name="md" class="info-item" id="ProductMD" placeholder="Почки">
+                </div>
+            </div>
+        </div>
+
+
+        {% for photos_group in photos_list %}
+        <div class="photos-block">
+                <center>
+                    {% for photo in photos_group %}
+                        <img src="{{ photo.photo }}" class="photo-container" id="Photo{{ photo.number }}">
+                        <img src="{% static 'images/abort-icon.png'%}" class="delete-photo-btn" id="DelPhoto{{ photo.number }}Btn" onclick="delete_photo({{ photo.number }})">
+                    {% endfor %}
+                </center>
+            </div>
+        {% endfor %}
+
+
+        <div id="UploadPhotosBlock">
+            <label for="UploadPhotos" class="form-label">Фотографии: </label>
+            <input type="file" name="photos" id="UploadPhotos"  multiple="multiple" style="margin-left: 20px" form="ProductBaseInfo">
+        </div>
+        <center>
+            <div id="SubmitButton" onclick="ProductBaseInfo.submit();">Сохранить</div>
+        </center>
+    </div>
+
+    <input type="hidden" form="ProductBaseInfo" id="ColorTags" name="color">
+    <input type="hidden" form="ProductBaseInfo" id="StoneTags" name="stone">
+    <input type="hidden" form="ProductBaseInfo" id="MGTags" name="MG">
+    <input type="hidden" form="ProductBaseInfo" id="MDTags" name="MD">
+    <input type="hidden" form="ProductBaseInfo" id="RemovePhoto" name="del_photos" value="">
+{% endblock %}

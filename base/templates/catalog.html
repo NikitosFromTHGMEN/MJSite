@@ -7,38 +7,16 @@
 
 {% block content %}
     <div class="content-block">
-        <div>
-            <div class="content-item">
-                <div class="content-item-fill">
-                    Браслет из натуральных камней пиропа и коралла.
-                    Немного о свойствах камней:
-                    * коралл наполняет энергией, даёт устойчивость, стабильность, заземляет.
-                    * пироп - камень наполняющий жизнелюбием и обаянием, творческой энергией и яркими эмоциями.
-                </div>
-            </div>
-            <a class="content-item" href="/product/1">
-                <div class="content-item-fill">
-                    Браслет из натуральных камней пиропа и коралла.
-                    Немного о свойствах камней:
-                    * коралл наполняет энергией, даёт устойчивость, стабильность, заземляет.
-                    * пироп - камень наполняющий жизнелюбием и обаянием, творческой энергией и яркими эмоциями.
+            {% for item in products %}
+            <a href="/product/{{ item.product.id }}" class="content-item">
+                <img src="{{ item.photo }}" class="content-item-fill">
+                <div class="content-item-fill-text">
+                    {{ item.product.preview_describe }}
                 </div>
             </a>
-            <div class="content-item">
-                <div class="content-item-fill">
-                    Браслет из натуральных камней пиропа и коралла.
-                    Немного о свойствах камней:
-                    * коралл наполняет энергией, даёт устойчивость, стабильность, заземляет.
-                    * пироп - камень наполняющий жизнелюбием и обаянием, творческой энергией и яркими эмоциями.
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="content-item"></div>
-            <div class="content-item"></div>
-            <div class="content-item"></div>
-        </div>
+            {% endfor %}
     </div>
 
-{% endblock %}
+    {% include "page_changer.html" %}
 
+{% endblock %}

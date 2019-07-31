@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{% static 'css/comments.css' %}">
 {% endblock %}
 
+{% block extended_js%}
+    {% load static %}
+    <script src="{% static 'js/product.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="alert-block">
         Внимание!<br> Точный повтор украшения невозможен
@@ -40,23 +45,71 @@
         <a href="/create_order/{{ product.id }}"><div class="create-order-btn">Оформить заказ</div></a>
     </center>
 
-    <div class="user-comments">
+    <div class="user-comments" id="CommentsBlock1">
         <div class="comments-header">
-            Комментарии:
+            <div class="comments-header-item comments-header-active-item" id="CommentsBtn" onclick="switch_to_comments1()">Комментарии ({{ comments_count }})</div>
+            <div class="comments-header-item" id="Comments1Btn" onclick="switch_to_comments2()">Отзывы ({{ comments1_count }})</div>
         </div>
+        {% if not comments %}
+            <div class="no-comments">Здесь пока нет комментариев...<br><br>Оставьте свой комментарий первым!</div>
+        {% endif %}
+
+        {% if is_user_auth %}
+            <div class="add-comment-btn" onclick="CommentForm.classList.toggle('hidden')">
+        {% else %}
+             <div class="add-comment-btn" onclick='document.location.href="/login/?next=/product/{{ product.id }}"'>
+        {% endif %}
+            <img src="{% static 'images/add_btn.png' %}" class="add-comment-btn-img">
+            Добавить комментарий
+        </div>
+        <form method="post" class="add-comment-form hidden" id="CommentForm" action="/create_comment/{{ product.id }}">
+            {% csrf_token %}
+            <textarea max_length="1000" class="add-comment-area" name="comment_text" placeholder="Введите комментарий"></textarea>
+            <center><input type="submit" class="add-comment-confirm-btn" value="Отправить"></center>
+        </form>
+
         {% for comment in comments %}
+            <div class="comment">
+                <a href="/profile/{{ comment.author.user.id }}">
+                    <div class="comment-author-block">
+                        <img src="{{ comment.author.photo }}" class="comment-author-photo">
+                        <div class="comment-author-info">{{ comment.author.user.first_name }}</div>
+                    </div>
+                </a>
+                <div class="comment-content">{{ comment.text }}</div>
+                {% if user_info.id == comment.author.id %}
+                    <div class="comment-actions-block">
+                            <a href="/delete_comment/0,{{ comment.id }}?next=/product/{{ product.id }}"><img src="{% static 'images/abort-icon.png' %}" class="comment-delete-btn"></a>
+                    </div>
+                {% endif %}
+                <div class="comment-time">{{ comment.time|date:"d.m.Y H:i" }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="user-comments hidden" id="CommentsBlock2">
+        <div class="comments-header">
+            <div class="comments-header-item" id="CommentsBtn" onclick="switch_to_comments1()">Комментарии ({{ comments_count }})</div>
+            <div class="comments-header-item comments-header-active-item" id="Comments1Btn" onclick="switch_to_comments2()">Отзывы ({{ comments1_count }})</div>
+        </div>
+        {% if not comments1 %}
+            <div class="no-comments">Здесь пока нет отзывов</div>
+        {% endif %}
+
+        {% for comment in comments1 %}
             <div class="comment">
                 <a href="/profile/{{ comment.author.user_id }}">
                     <div class="comment-author-block">
                         <img src="{{ comment.author.photo }}" class="comment-author-photo">
-                        <div class="comment-author-info">
-                           {{ comment.author.user.first_name }}
-                        </div>
+                        <div class="comment-author-info">{{ comment.author.user.first_name }}</div>
                     </div>
                 </a>
-                <div class="comment-content">
-                    {{ comment.text }}
-                </div>
+                <div class="comment-content">{{ comment.text }}</div>
+                {% if user_info.id == comment.author.id %}
+                    <div class="comment-actions-block">
+                            <a href="/delete_comment/1,{{ comment.id }}?next=/product/{{ product.id }}"><img src="{% static 'images/abort-icon.png' %}" class="comment-delete-btn"></a>
+                    </div>
+                {% endif %}
+                <div class="comment-time">{{ comment.time|date:"d.m.Y H:i" }}</div>
             </div>
         {% endfor %}
     </div>

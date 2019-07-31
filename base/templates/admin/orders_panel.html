@@ -7,8 +7,77 @@
 {% endblock %}
 
 
-{% block content %}
-    <div class="actions-panel">
-
-    </div>
+{% block extended_js %}
+    {% load static %}
+    <script src="{% static 'js/admin/orders_panel.js' %}"></script>
 {% endblock %}
+
+
+{% block content %}
+    {% load static %}
+    <div class="table-header">
+        <div class="table-header-actions-block">
+            <a href="/orders_panel/{{ pages.current }}" class="table-header-action">Все</a>
+            <a href="/orders_panel/{{ pages.current }}?filter=p" class="table-header-action">Новые</a>
+            <a href="/orders_panel/{{ pages.current }}?filter=a" class="table-header-action">Приняты</a>
+            <a href="/orders_panel/{{ pages.current }}?filter=d" class="table-header-action">Выполнены</a>
+            <a href="/orders_panel/{{ pages.current }}?filter=c" class="table-header-action">Отменены</a>
+        </div>
+    </div>
+
+    {% for item in orders %}
+        <div class="order-block">
+            <img src="{{ item.product.photo }}" class="product-photo">
+            <div class="product-name-block">
+                <div class="product-field-header">Название</div>
+                {% if item.product != None %}
+                    {{ item.product.name }}
+                {% else %}
+                    <p style="color: red; font-style: italic;">Товар удален</p>
+                {% endif %}
+            </div>
+            <div class="order-actions-block">
+                {% if admin_profile.can_check_orders_info %}
+                    <a href="/show_order/{{ item.id }}"><img src="{% static 'images/document_icon.png'%}" class="order-show-button"></a>
+                {% endif %}
+                <div class="dropdown">
+                    {% if item.product != None %}
+                        {% if item.status == "p" %}
+                            <img src="{% static 'images/process-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="order-status-button" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        {% elif item.status == "a" %}
+                            <img src="{% static 'images/accept-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="order-status-button" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        {% elif item.status == "c" %}
+                            <img src="{% static 'images/abort-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="order-status-button" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        {% elif item.status == "d" %}
+                            <img src="{% static 'images/done-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="order-status-button" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        {% endif %}
+                    {% else %}
+                        {% if item.status == "d" %}
+                            <img src="{% static 'images/done-icon.png'%}" class="order-status-button">
+                        {% else %}
+                            <img src="{% static 'images/abort-icon.png'%}" class="order-status-button">
+                        {% endif %}
+                    {% endif %}
+
+                    {% if admin_profile.can_edit_orders %}
+                        <div class="dropdown-content" id="DropDown{{ item.id }}">
+                            <img src="{% static 'images/process-icon.png'%}" class="order-status-button" onclick="this.parentElement.classList.toggle('show'); StatusBtn{{item.id}}.src='/static/images/process-icon.png'">
+                            <img src="{% static 'images/accept-icon.png'%}" class="order-status-button" onclick="this.parentElement.classList.toggle('show'); StatusBtn{{item.id}}.src='/static/images/accept-icon.png'">
+                            <img src="{% static 'images/abort-icon.png'%}" class="order-status-button" onclick="this.parentElement.classList.toggle('show'); StatusBtn{{item.id}}.src='/static/images/abort-icon.png'">
+                            <img src="{% static 'images/done-icon.png'%}" class="order-status-button" onclick="this.parentElement.classList.toggle('show'); StatusBtn{{item.id}}.src='/static/images/done-icon.png'">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <center>
+        <a href="/orders_panel/{{ pages.current }}" id="SaveBtn">
+            <button class="save-button" onclick="get_orders_status();">Сохранить</button>
+        </a>
+    </center>
+
+    {% include "page_changer.html" %}
+{% endblock %}
+

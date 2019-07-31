@@ -1,62 +1,198 @@
 .user-comments {
-    width: 1250px;
-    margin-left: 60px;
-    margin-top: 70px;
-    display: inline-block;
+    width: 1150px;
+    margin: 100 100 0 100px;
     font-family: 'Times New Roman';
     font-size: 16pt;
+    border-bottom: 2px solid gray;
 }
 
 .comments-header {
     margin-bottom: 40px;
+    border-bottom: 2px solid gray;
+}
+
+.comments-header-item {
+    border: 1px solid gray;
+    border-radius: 5px 5px 0px 0px;
+    height: inherit;
+    padding: 10 20px;
+    font-size: 12pt;
+    font-family: "Arial";
+    font-weight: bold;
+    display: inline-block;
+    border-bottom: 0px;
+    transition: 0.5s;
+    text-align: center;
+}
+
+.comments-header-item:hover {
+    cursor: pointer;
+}
+
+.comments-header-active-item {
+    background-color: #9bc8de;
+    padding-top: 15px;
+    transition: 0.75s;
+    font-size: 14pt;
 }
 
 .comment {
-    height: 200px;
     background-color: white;
     margin: 20px;
-    border-radius: 0px;
-    border: 3px solid gray;
+    border: 2px solid gray;
     padding: 15px;
+    border-radius: 5px;
+    transition: 1s;
+}
+
+.comment:hover {
+    box-shadow: 0 0 8px 1px black;
+    transition: 0.5s;
 }
 
 .comment-author-block {
-    width: 150px;
-    height: 200px;
+    width: 200px;
     background-color: white;
     border-radius: 5px;
     margin-top: 10px;
     display: inline-block;
     vertical-align: top;
+    transition: 0.5s;
+}
+
+.comment-author-block:hover {
+    transform: scale(1.05);
+    transition: 1s;
 }
 
 .comment-author-photo {
-    width: 100px;
+    width: 130px;
     height: 135px;
     margin: 0 25 0 25px;
     border: 2px solid aquamarine;
-    background-image: url('https://pp.userapi.com/c850024/v850024306/d76b0/ATuWqjgLirs.jpg');
-    background-size: cover;
+    background-color: white;
+    background-size: contain;
     background-repeat: no-repeat;
     border-radius: 5px;
 }
 
 .comment-author-info {
     text-align: center;
-    font-size: 14pt;
-    margin-top: 15px;
     font-size: 12pt;
+    margin: 15 25 0 0px;
     font-style: italic;
+    font-weight: bold;
     color: black;
+    white-space: pre-wrap;
 }
 
 .comment-content {
     display: inline-block;
     vertical-align: top;
     background-color: white;
-    width: 980px;
+    width: 800px;
     height: 180px;
     margin: 15 0 0 20px;
     font-size: 14pt;
     font-style: italic;
+    font-family: "Arial";
+    white-space: pre-wrap;
+}
+
+.comment-time {
+    display: block;
+    height: 30px;
+    font-size: 10pt;
+    font-family: "Arial";
+    font-style: italic;
+    font-weight: bold;
+    text-align: right;
+}
+
+.comment-actions-block {
+    width: 30px;
+    display: inline-block;
+}
+
+.comment-delete-btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-size: contain;
+    transition: 1s;
+}
+
+.comment-delete-btn:hover {
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+
+.no-comments {
+    height: 150px;
+    font-size: 16pt;
+    font-weight: bold;
+    font-family: "Arial";
+    text-align: center;
+}
+
+.add-comment-btn {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5 10px;
+    color: black;
+    background-color: #9bc8de;
+    font-size: 10pt;
+    font-family: 'Arial';
+    font-weight: bold;
+    display: inline-block;
+    transition: 1s;
+    margin-bottom: 30px;
+}
+
+.add-comment-btn:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.add-comment-btn-img {
+    background-size: contain;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.add-comment-area {
+    resize: none;
+    width: 600px;
+    height: 200px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.add-comment-form {
+    display: inline-block;
+    margin-left: 100px;
+    vertical-align: top;
+    margin-bottom: 50px;
+}
+
+.add-comment-confirm-btn {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+    transition: 1s;
+    display: inline-block;
+}
+
+.add-comment-confirm-btn:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.hidden {
+    display: none;
 }

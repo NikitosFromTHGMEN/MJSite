@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/account_banned.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <center>
+        <h1>Ваш аккаунт заблокирован!</h1>
+    </center>
+
+    {% load static %}
+    <div>
+        <img id="background" src="{% static 'images/YAISB.gif' %}">
+        <div class="feedback-block">
+            <div class="reason-block">
+                <h2>Причина блокировки:</h2>
+                <textarea class="reason-area" readonly>{{ reason }}</textarea>
+            </div>
+
+            <div class="report-block">
+                {% if report_status == "not reported" %}
+                    <h2>Обжаловать решение:</h2>
+                    <form method="post" id="ReportForm">
+                        {% csrf_token %}
+                        <textarea max_length="1000" form="ReportForm" name="report_text" class="report-area" placeholder="Причина блокировки некорректна, потому что..."></textarea>
+                    </form>
+                    <div class="confirm-btn" onclick="ReportForm.submit();">Отправить</div>
+                {% elif report_status == "reported" %}
+                    <h2>Ваша жалоба принята:</h2>
+                    <textarea class="report-area" readonly>{{ user_profile.report_text }}</textarea>
+                {% elif report_status == "report cancelled" %}
+                    <h2 class="error-msg">Ваша жалоба отклонена:</h2>
+                    <textarea class="report-area" readonly>{{ user_profile.report_text }}</textarea>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -2,10 +2,9 @@
 
 
 {% block content %}
-    <center>
-        Упс...<br>
-        #500 Ошибка сервера
-        {% load static %}
-        <img src="{% static '/images/server_down.gif'%}">
-    </center>
+    {% load static %}
+
+    <p style="font-size: 28pt; margin-bottom: 50px; text-align: center;">Упс...</p>
+    <center><img src="{% static '/images/server_down.gif'%}"></center>
+    <p style="font-size: 28pt; margin-top: 50px; text-align: center;">Ошибка сервера</p>
 {% endblock %}

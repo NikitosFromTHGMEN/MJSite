@@ -9,6 +9,16 @@
     font-size: 14pt;
 }
 
+.info-block-text {
+    width: 800px;
+    font-family: 'Neucha';
+    font-style: normal;
+    font-size: 12pt;
+    color: black;
+    font-weight: 550;
+    white-space: pre-wrap;
+}
+
 .product-info-block {
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
@@ -23,7 +33,7 @@
     height: 200px;
     background-size: cover;
     background-position: -50 0px;
-    background-image: url('https://pp.userapi.com/c847124/v847124262/15b41e/fkAzzhjiRS4.jpg');
+    background-color: white;
     display: inline-block;
 }
 
@@ -113,6 +123,12 @@ form {
     margin-bottom: 30px;
 }
 
+.form-wishes-block {
+    position: relative;
+    margin-bottom: 200px;
+    width: 560px;
+}
+
 .form-item {
     border-radius: 5px;
     height: 30px;
@@ -147,6 +163,13 @@ form {
     padding-left: 0px;
 }
 
+
+#WishesBlock {
+    width: 400px;
+    height: 200px;
+    resize: none;
+}
+
 /* help */
 
 .help-btn {
@@ -173,4 +196,3 @@ form {
 .help-btn:hover .help-msg {
     display: block;
 }
-
