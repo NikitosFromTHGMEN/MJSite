@@ -1,0 +1,31 @@
+h1 {
+    font-family: "Times New Roman";
+    margin-left: 50px;
+}
+
+h2 {
+    font-family: "Arial";
+    margin-left: 80px;
+}
+
+.img {
+    width: 700px;
+    height: 400px;
+    background-size: contain;
+    margin: 20px;
+}
+
+li {
+  font-style: italic;
+  font-weight: normal;
+}
+
+h3 {
+    margin-left: 100px;
+}
+
+p {
+    font-family: 'Arial';
+    font-style: italic;
+    font-weight: normal;
+}

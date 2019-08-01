@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block extended_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/measurement_manual.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Как замерить запястье?</h1>
+    <center><img class="img" src="{% static 'images/measurement_manual_img1.jpg' %}"></center>
+    <h2>Для того чтобы браслет комфортно сидел на руке очень важно правильно сделать замер:</h2>
+    <h3>
+        <ul>
+            <li>Замер делается у основания запястья по косточкам.</li>
+⠀           <li>Запястье замеряется лентой, <u>лента должна плотно прилегать к руке</u>.</li>
+        </ul>
+        <img class="img" src="{% static 'images/measurement_manual_img.jpg' %}">
+        <p><span style="color: red; font-size: 18pt; font-style: normal;">Важно!!!</span>
+            Никаких <u style="font-weight: bold">лишних запасов делать не нужно</u>, запасы будут сделаны с учётом Ваших пожеланий.
+        </p>
+    </h3>
+{% endblock %}
