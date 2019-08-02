@@ -13,7 +13,7 @@
                     <img src="{{ user_photo }}" class="profile-img" onclick="ProfileDropDown.classList.toggle('show');">
                     <div class="profile-dropdown-content" id="ProfileDropDown">
                         <a href="/profile/{{ user.id }}"><div class="profile-dropdown-content-item">Профиль</div></a>
-                        <a href="/orders_list/{{ user.id }}"><div class="profile-dropdown-content-item">Мои заказы</div></a>
+                        <a href="/my_orders/1"><div class="profile-dropdown-content-item">Мои заказы</div></a>
                         <a href="/settings"><div class="profile-dropdown-content-item">Настройки</div></a>
 
                         {% if user.is_superuser %}
