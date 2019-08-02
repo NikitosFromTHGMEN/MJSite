@@ -103,6 +103,7 @@ def upload_file(request):
     return render(request, 'upload.html', context=context)
 
 
+@login_required
 def admin_appoint_page(request, id):
     if len(UserProfile.objects.filter(id=id)) == 0:
         return redirect('404')
@@ -205,3 +206,77 @@ def admin_appoint_page(request, id):
                 return redirect("permission_error")
 
     return render(request, 'admin/appoint_admin.html', context=context)
+
+
+@login_required
+def my_orders_page(request, page):
+    context = get_base_context(request, "Мои заказы")
+
+    user = request.user
+    user_info = get_user_info(request, user)
+
+    orders_on_page = 25
+    orders = []
+    orders_dbase = [{'order': order, 'product_photo': order.product.photo.split(sep=",")[0] if order.product else "" } for order in Orders.objects.filter(customer_id=user_info.id)]
+
+    if len(request.GET) > 0:
+        status_filter = request.GET.get('filter', '')
+        search = request.GET.get('search', "")
+        confirmation = request.GET.get('confirmation', '-1')
+
+        if confirmation != "-1":
+            order_id, val = map(int, confirmation.split(sep=","))
+
+            if len(Orders.objects.filter(id=order_id)) > 0:
+                order = Orders.objects.get(id=order_id)
+                if not val:
+                    order.customer_status = "c"
+                    order.status = "c"
+                    order.cancel_reason = "отменено покупателем"
+                else:
+                    order.customer_status = "d"
+                order.save()
+
+                return redirect('my_orders', page=page)
+
+        if search != "":
+            words = search.split()
+            new_orders = []
+
+            for order in orders_dbase:
+                if order['order'].product == None:
+                    continue
+
+                score = 0
+
+                for word in words:
+                    if order['order'].product.name.lower().find(word.lower()) != -1:
+                        score += 1
+
+                if score > 0:
+                    new_orders.append({'order': order, 'score': score})
+
+            new_orders = sorted(new_orders, key=lambda x: x['score'])
+            orders_dbase = [order['order'] for order in new_orders]
+
+        if status_filter != "":
+            orders_dbase = [{'order': order, 'product_photo': order.product.photo.split(sep=",")[0] if order.product else "" } for order in Orders.objects.filter(customer_id=user_info.id, status=status_filter)]
+
+    if len(orders_dbase) != 0:
+        if len(orders_dbase) <= orders_on_page * (int(page) - 1):
+            return redirect('404')
+
+        range_from = orders_on_page * (int(page) - 1)
+        range_to = range_from + orders_on_page if range_from + orders_on_page < len(orders_dbase) else range_from + (len(orders_dbase) - range_from)
+
+        for i in range(range_from, range_to):
+            orders.append(orders_dbase[i])
+
+    context['orders'] = reversed(orders)
+    context['pages'] = {
+        'max': len(orders_dbase) // orders_on_page if (len(orders_dbase) / orders_on_page) % 1 == 0 else len(orders_dbase) // orders_on_page + 1,
+        'current': int(page)
+    }
+
+    return render(request, "my_orders.html", context=context)
+

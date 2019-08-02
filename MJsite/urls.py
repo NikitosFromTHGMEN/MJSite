@@ -47,6 +47,7 @@ urlpatterns = [
     path('create_comment/<product_id>', views.create_comment_page, name="create_comment"),
     path('delete_comment/<comment>', views.delete_comment_page, name="delete_comment"),
     path('measurement_manual', views.measurement_manual_page, name="measurement_manual"),
+    path('my_orders/<page>', account_views.my_orders_page, name="my_orders"),
 ]
 
 handler404 = 'base.views.not_found_page'
