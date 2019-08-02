@@ -123,7 +123,7 @@ def admin_orders_panel_page(request, page):
 
     orders_on_page = 25
     orders = []
-    orders_dbase = Orders.objects.all()
+    orders_dbase = [{'order': order, 'product_photo': order.product.photo.split(sep=",")[0] if order.product != None else ""} for order in Orders.objects.all()]
 
     if len(request.GET) > 0:
         change_orders = request.GET.get('change', '')
@@ -146,7 +146,7 @@ def admin_orders_panel_page(request, page):
                 return redirect("permission_error")
 
         if status_filter != "":
-            orders_dbase = Orders.objects.filter(status=status_filter)
+            orders_dbase = [{'order': order, 'product_photo': order.product.photo.split(sep=",")[0] if order.product != None else ""} for order in Orders.objects.filter(status=status_filter)]
 
     if len(orders_dbase) != 0:
         if len(orders_dbase) <= orders_on_page * (int(page) - 1):
