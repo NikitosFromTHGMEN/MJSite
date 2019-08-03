@@ -234,7 +234,7 @@ def my_orders_page(request, page):
                     order.status = "c"
                     order.cancel_reason = "отменено покупателем"
                 else:
-                    order.customer_status = "d"
+                    order.customer_status = "d" if order.customer_status != "ndc" else "dc"
                 order.save()
 
                 return redirect('my_orders', page=page)
@@ -262,6 +262,7 @@ def my_orders_page(request, page):
         if status_filter != "":
             orders_dbase = [{'order': order, 'product_photo': order.product.photo.split(sep=",")[0] if order.product else "" } for order in Orders.objects.filter(customer_id=user_info.id, status=status_filter)]
 
+
     if len(orders_dbase) != 0:
         if len(orders_dbase) <= orders_on_page * (int(page) - 1):
             return redirect('404')
@@ -274,9 +275,20 @@ def my_orders_page(request, page):
 
     context['orders'] = reversed(orders)
     context['pages'] = {
-        'max': len(orders_dbase) // orders_on_page if (len(orders_dbase) / orders_on_page) % 1 == 0 else len(orders_dbase) // orders_on_page + 1,
+        'max': len(orders_dbase) // orders_on_page  if (len(orders_dbase) / orders_on_page) % 1 == 0 else len(orders_dbase) // orders_on_page + 1,
         'current': int(page)
     }
 
+
     return render(request, "my_orders.html", context=context)
+
+
+
+
+
+
+
+
+
+
 

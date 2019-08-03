@@ -184,3 +184,40 @@
 .order-action-button:hover + .help-msg {
     visibility: visible;
 }
+
+.dropdown-make-comment {
+    width: 300px;
+    padding: 10 10 0 10px;
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: -300px;
+    background-color: #f1f1f1;
+    z-index: 1;
+}
+
+.make-comment-area {
+    width: 300px;
+    height: 150px;
+    resize: none;
+}
+
+.make-comment-btn {
+    background-color: red;
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: "Arial";
+    color: white;
+    border-radius: 5px;
+    margin: 10 0 0 205px;
+    transition: 1s;
+}
+
+.make-comment-btn:hover {
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+
+.show {
+    display: block;
+}

@@ -31,6 +31,12 @@ def server_error_page(request, template_name="500.html"):
     return response
 
 
+def measurement_manual_page(request):
+    context = get_base_context(request, "Замер запястья")
+
+    return render(request, "measurement_manual.html", context=context)
+
+
 @login_required
 def create_order_page(request, id):
     if len(Product.objects.filter(id=id)) == 0:
@@ -96,16 +102,33 @@ def show_order_page(request, id):
 
 
 @login_required
-def create_comment_page(request, product_id):
+def create_comment_page(request, info):
+    c_type, item_id = map(int, info.split(sep=","))
+
+    print(request.POST)
+
     if request.method == "POST":
         comment_text = request.POST.get('comment_text', '')
 
-        if len(Product.objects.filter(id=product_id)) > 0:
-            product = Product.objects.get(id=product_id)
+        if c_type == 0:
+            if len(Product.objects.filter(id=item_id)) > 0:
+                product = Product.objects.get(id=item_id)
 
-            Comment(author=get_user_info(request, request.user), product=product, text=comment_text, time=datetime.datetime.now(tz=pytz.timezone('Europe/Moscow'))).save()
+                Comment(author=get_user_info(request, request.user), product=product, text=comment_text, time=datetime.datetime.now(tz=pytz.timezone('Europe/Moscow'))).save()
 
-            return redirect('product', id=product_id)
+                return redirect('product', id=item_id)
+        elif c_type == 1:
+            if len(Orders.objects.filter(id=item_id)) > 0:
+                order = Orders.objects.get(id=item_id)
+
+                if order.customer_id == get_user_info(request, request.user).id:
+                    if order.status == "d":
+                        Comment1(author=get_user_info(request, request.user), product=order.product, text=comment_text, time=datetime.datetime.now(tz=pytz.timezone('Europe/Moscow'))).save()
+                        order.customer_status = "dc" if order.customer_status == "d" else "ndc"
+                        order.save()
+                        return redirect('my_orders', 1)
+
+                return redirect('permission_error')
 
     return redirect('404')
 

@@ -79,9 +79,18 @@
                         <img src="{% static 'images/confirmation-done-icon.png'%}" class="order-action-button" onclick="send_confirmation({{ item.order.id }}, 1)">
                         <div class="help-msg">Подтвердить завершение заказа</div>
                     {% endif %}
-                    {% if item.order.customer_status != "dc" %}
-                        <img src="{% static 'images/make-comment-icon.webp' %}" class="order-action-button">
-                        <div class="help-msg">Оставить отзыв</div>
+                    {% if item.order.customer_status != "dc" and item.order.customer_status != "ndc" %}
+                        <div class="dropdown">
+                            <img src="{% static 'images/make-comment-icon.webp' %}" class="order-action-button" onclick="MakeCommentBlock{{ item.order.id }}.classList.toggle('show')">
+                            <div class="help-msg">Оставить отзыв</div>
+                            <div class="dropdown-make-comment" id="MakeCommentBlock{{ item.order.id }}">
+                                <form method="post" action="/create_comment/1,{{ item.order.id  }}">
+                                    {% csrf_token %}
+                                    <textarea class="make-comment-area" id="MakeCommentArea{{ user.id }}" name="comment_text" placeholder="Введите отзыв..."></textarea>
+                                    <button class="make-comment-btn" onclick="send_comment({{ user.user.id }});">Отправить</button>
+                                </form>
+                            </div>
+                        </div>
                     {% endif %}
                 {% endif %}
             </div>

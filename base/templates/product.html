@@ -62,7 +62,7 @@
             <img src="{% static 'images/add_btn.png' %}" class="add-comment-btn-img">
             Добавить комментарий
         </div>
-        <form method="post" class="add-comment-form hidden" id="CommentForm" action="/create_comment/{{ product.id }}">
+        <form method="post" class="add-comment-form hidden" id="CommentForm" action="/create_comment/0,{{ product.id }}">
             {% csrf_token %}
             <textarea max_length="1000" class="add-comment-area" name="comment_text" placeholder="Введите комментарий"></textarea>
             <center><input type="submit" class="add-comment-confirm-btn" value="Отправить"></center>
