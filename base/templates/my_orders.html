@@ -15,42 +15,6 @@
 
 {% block content %}
     {% load static %}
-    <div class="status-description-block">
-         <div class="description-block">
-            <h2>Статус</h2>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/process-icon.png' %}"> - Заказ в обработке
-            </div>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/accept-icon.png' %}"> - Заказ рассмотрен администратором
-            </div>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/abort-icon.png' %}"> - Заказ отменен
-            </div>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/done-icon.png' %}"> - Заказ выполнен
-            </div>
-        </div>
-        <div class="description-block">
-            <h2>Действия</h2>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/document_icon.png' %}"> - Просмотреть информацию о заказе
-            </div>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/make-comment-icon.webp' %}"> - Оставить комментарий
-            </div>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/process-icon.png' %}"> - Ожидание отмены или завершения заказа
-            </div>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/abort-icon.png' %}"> - Отменить заказ
-            </div>
-            <div class="status-description">
-                <img class="status-icon" src="{% static 'images/done-icon.png' %}"> - Завершить заказ
-            </div>
-        </div>
-    </div>
-
     <div class="table-header">
         <div class="table-header-actions-block">
             <a href="/my_orders/{{ pages.current }}" class="table-header-action">Все</a>
@@ -81,49 +45,43 @@
                 {% if item.order.product != None %}
                     {% if item.order.status == "p" %}
                         <img src="{% static 'images/process-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="status-icon" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        <span class="status-description-text">(В обработке)</span>
                     {% elif item.order.status == "a" %}
                         <img src="{% static 'images/accept-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="status-icon" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        <span class="status-description-text">(Рассмотрен администратором)</span>
                     {% elif item.order.status == "c" %}
                         <img src="{% static 'images/abort-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="status-icon" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        <span class="status-description-text">(Отменен)</span>
                     {% elif item.order.status == "d" %}
                         <img src="{% static 'images/done-icon.png'%}" id="StatusBtn{{ item.id }}" name="status_btn" class="status-icon" onclick="DropDown{{item.id}}.classList.toggle('show')">
+                        <span class="status-description-text">(Выполнен)</span>
                     {% endif %}
                 {% else %}
                     {% if item.order.status == "d" %}
                         <img src="{% static 'images/done-icon.png'%}" class="status-icon">
+                        <span class="status-description-text">(Выполнен)</span>
                     {% else %}
                         <img src="{% static 'images/abort-icon.png'%}" class="status-icon">
+                        <span class="status-description-text">(Отменен)</span>
                     {% endif %}
                 {% endif %}
             </div>
             <div class="order-actions-block">
-                <a href="/show_order/{{ item.order.id }}"><img src="{% static 'images/document_icon.png'%}" class="order-show-button"></a>
-                <div class="dropdown">
-                    {% if item.order.product != None or item.order.status == "d" %}
-                        {% if item.order.customer_status == "n" or item.order.customer_status == "p" %}
-                            <img src="{% static 'images/process-icon.png'%}" id="StatusBtn{{ item.order.id }}" name="status_btn" class="order-status-button" onclick="DropDown{{item.order.id}}.classList.toggle('show')">
-                        {% else %}
-                            {% if item.order.customer_status == "c" %}
-                                <img src="{% static 'images/abort-icon.png'%}" class="order-status-button">
-                            {% elif item.order.customer_status == "d" %}
-                                <img src="{% static 'images/done-icon.png'%}" class="order-status-button">
-                            {% endif %}
-                        {% endif %}
-                    {% else %}
-                        <img src="{% static 'images/abort-icon.png'%}" class="order-status-button">
+                <a href="/show_order/{{ item.order.id }}">
+                    <img src="{% static 'images/document_icon.png'%}" class="order-action-button">
+                    <div class="help-msg">Просмотреть информацию о заказе</div>
+                </a>
+                {% if item.order.status != "d" and item.order.status != "c" %}
+                    <img src="{% static 'images/order-cancel-icon.webp'%}" class="order-action-button" onclick="send_confirmation({{ item.order.id }}, 0)">
+                    <div class="help-msg">Отменить заказ</div>
+                {% elif item.order.status == "d" %}
+                    {% if item.order.customer_status != "d" and item.order.customer_status != "dc" %}
+                        <img src="{% static 'images/confirmation-done-icon.png'%}" class="order-action-button" onclick="send_confirmation({{ item.order.id }}, 1)">
+                        <div class="help-msg">Подтвердить завершение заказа</div>
                     {% endif %}
-                    <div class="dropdown-content" id="DropDown{{ item.order.id }}">
-                        {% if item.order.status == "d" %}
-                            <img src="{% static 'images/done-icon.png'%}" class="order-status-button" onclick="this.parentElement.classList.toggle('show'); StatusBtn{{item.order.id}}.src='/static/images/done-icon.png'; send_confirmation({{ item.order.id }}, 1)">
-                        {% endif %}
-                        <img src="{% static 'images/abort-icon.png'%}" class="order-status-button" onclick="this.parentElement.classList.toggle('show'); StatusBtn{{item.order.id}}.src='/static/images/abort-icon.png'; send_confirmation({{ item.order.id }}, 0)"></a>
-                    </div>
-                </div>
-                {% if item.order.status == "d" %}
                     {% if item.order.customer_status != "dc" %}
-                        <img src="{% static 'images/make-comment-icon.webp' %}" class="order-comment-btn">
-                    {% else %}
-                        <img src="{% static 'images/comment-exists.webp' %}" class="order-comment-btn">
+                        <img src="{% static 'images/make-comment-icon.webp' %}" class="order-action-button">
+                        <div class="help-msg">Оставить отзыв</div>
                     {% endif %}
                 {% endif %}
             </div>
