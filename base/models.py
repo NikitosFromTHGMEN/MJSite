@@ -31,13 +31,6 @@ class Comment(models.Model):
     time = models.DateTimeField(default=datetime.datetime.now())
 
 
-class Comment1(models.Model):
-    author = models.ForeignKey(to=UserProfile, on_delete=models.CASCADE, default=0)
-    product = models.ForeignKey(to=Product, on_delete=models.SET_NULL, default=0, null=True)
-    text = models.CharField(max_length=255)
-    time = models.DateTimeField(default=datetime.datetime.now())
-
-
 class ProductTags(models.Model):
     tag_name = models.CharField(max_length=50)
     type = models.CharField(max_length=50, default="")
@@ -63,6 +56,14 @@ class Orders(models.Model):
     customer_status = models.CharField(max_length=1, default="n")
     customer_wishes = models.TextField(max_length=1000, default="")
     cancel_reason = models.CharField(max_length=1000, default="")
+
+
+class Comment1(models.Model):
+    author = models.ForeignKey(to=UserProfile, on_delete=models.CASCADE, default=0)
+    product = models.ForeignKey(to=Product, on_delete=models.SET_NULL, default=0, null=True)
+    text = models.CharField(max_length=255)
+    time = models.DateTimeField(default=datetime.datetime.now())
+    order = models.ForeignKey(to=Orders, on_delete=models.SET_NULL, default=1, null=True)
 
 
 class AdminProfile(models.Model):

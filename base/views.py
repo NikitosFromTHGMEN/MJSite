@@ -77,7 +77,7 @@ def orders_list_page(request, id):
 
     context = get_base_context(request, "Все заказы")
     context['user_info'] = user_info
-    context['orders'] = [{'order': order, 'comment': Comment1.objects.get(product=order.product, author=user_info) if len(Comment1.objects.filter(product=order.product, author=user_info)) else None} for order in Orders.objects.filter(customer=user_info)]
+    context['orders'] = [{'order': order, 'comment': Comment1.objects.get(product=order.product, author=user_info, order=order) if len(Comment1.objects.filter(product=order.product, author=user_info, order=order)) else None} for order in Orders.objects.filter(customer=user_info)]
     context['orders_count'] = len(context['orders'])
 
     return render(request, 'orders_list.html', context=context)
@@ -105,8 +105,6 @@ def show_order_page(request, id):
 def create_comment_page(request, info):
     c_type, item_id = map(int, info.split(sep=","))
 
-    print(request.POST)
-
     if request.method == "POST":
         comment_text = request.POST.get('comment_text', '')
 
@@ -123,7 +121,7 @@ def create_comment_page(request, info):
 
                 if order.customer_id == get_user_info(request, request.user).id:
                     if order.status == "d":
-                        Comment1(author=get_user_info(request, request.user), product=order.product, text=comment_text, time=datetime.datetime.now(tz=pytz.timezone('Europe/Moscow'))).save()
+                        Comment1(author=get_user_info(request, request.user), product=order.product, text=comment_text, time=datetime.datetime.now(tz=pytz.timezone('Europe/Moscow')), order=order).save()
                         order.customer_status = "dc" if order.customer_status == "d" else "ndc"
                         order.save()
                         return redirect('my_orders', 1)
