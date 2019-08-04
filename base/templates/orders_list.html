@@ -66,7 +66,7 @@
                 </td>
                 <td>
                     {% if order.order.status == "d" %}
-                        {% if order.order.customer_status == "d" %}
+                        {% if order.order.customer_status == "d" or order.order.customer_status == "dc" %}
                             Подтвержден
                         {% else %}
                             Не подтвержден
@@ -76,14 +76,14 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if order.comment %}
-                        Есть
-                    {% else %}
-                        {% if order.order.status == "d" %}
-                            Нет
+                    {% if order.order.status == "d" %}
+                        {% if order.customer_status == "dc" or order.customer_status == "ndc" %}
+                            Есть
                         {% else %}
-                            -
+                            Нет
                         {% endif %}
+                    {% else %}
+                        -
                     {% endif %}
                 </td>
             </tr>
