@@ -58,18 +58,16 @@ a {
 
 footer {
     margin-top: 80px;
-    height: 50px;
-    width: 100%;
+    min-height: 50px;
+    padding: 20px;
     background-color: #242424;
 }
 
 .footer-text {
-    position: relative;
     color: white;
     text-align: center;
-    top: 20px;
-    right: 20px;
     font-size: 14px;
+    margin-top: 50px;
 }
 
 .profile-img {
@@ -215,3 +213,56 @@ footer {
     transition: 0.25s;
     transform: scale(1.05);
 }
+
+.sn-block {
+    max-width: 300px;
+    margin-top: 30px;
+}
+
+.sn-header {
+    color: white;
+    font-family: 'Arial';
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14pt;
+    margin-bottom: 20px;
+}
+
+.sn-item {
+    vertical-align: top;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.sn-item>a {
+    color: white;
+    font-style: italic;
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: "Times New Roman";
+    transition: 2s;
+}
+
+
+.sn-item-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    background-size: contain;
+    vertical-align: middle;
+    margin-right: 5px;
+    transform: rotate(0deg);
+    transition: 2s;
+}
+
+.sn-item:hover>a>.sn-item-icon {
+    transition: 1s;
+    transform: rotate(360deg) scale(1.3);
+    margin-right: 10px;
+}
+
+.sn-item:hover>a {
+    font-size: 12pt;
+}
+
