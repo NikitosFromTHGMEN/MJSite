@@ -77,7 +77,7 @@
                 </td>
                 <td>
                     {% if order.order.status == "d" %}
-                        {% if order.customer_status == "dc" or order.customer_status == "ndc" %}
+                        {% if order.order.customer_status == "dc" or order.order.customer_status == "ndc" %}
                             Есть
                         {% else %}
                             Нет
